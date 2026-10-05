@@ -2,7 +2,7 @@
 
 Site estático (Astro) de [Leonardo Mitsuo Fukuda](https://github.com/mitsuoleo). Português é o padrão; inglês vive em `/en`. Glossário em [`CONTEXT.md`](./CONTEXT.md). Decisões em [`docs/adr`](./docs/adr).
 
-Não publique até o repositório de evidência de Commerce Intelligence existir e for clonável (ADR 0014). Este repo é só o site.
+O sistema principal agora é o [Observa](https://github.com/mitsuoleo/observa), com repositório público e clonável. Esta substituição das páginas planejadas de Commerce Intelligence e Catálogo está registrada na [ADR 0021](./docs/adr/0021-observa-is-anchor.md). Este repo contém somente o site.
 
 ## Local
 
@@ -26,7 +26,7 @@ npm test
 
 ## Contato e CV
 
-Edite `src/config.ts`: `email`, `linkedin`, e `cv` (`/cv.pdf` se você colocar o arquivo em `public/cv.pdf`). Campos vazios não aparecem — GitHub sempre aparece.
+O currículo em PDF está em `public/cv.pdf` e é servido em `/cv.pdf`. Os links de contato e o caminho do PDF ficam em `src/config.ts`.
 
 ## Cloudflare Pages
 

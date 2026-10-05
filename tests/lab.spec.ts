@@ -1,23 +1,32 @@
 import { expect, test } from "@playwright/test";
 
-test("index states the role and the anchor system", async ({ page }) => {
+test("index states the role and features Observa", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Engenheiro");
   await expect(page.getByText(/Olá, eu sou Leonardo Mitsuo Fukuda/)).toBeVisible();
-  await expect(page.getByRole("link", { name: /SYS\/001/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /SYS\/001 Observa/ })).toBeVisible();
 });
 
 test("work filters by domain", async ({ page }) => {
   await page.goto("/trabalhos");
-  await page.getByLabel("Domínio").selectOption("Data");
+  await page.getByLabel("Domínio").selectOption("Systems Design");
   await expect(page.getByRole("link", { name: /SYS\/001/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: /SYS\/003/ })).toBeHidden();
+  await expect(page.getByRole("link", { name: /SYS\/004/ })).toBeHidden();
 });
 
-test("commerce intelligence has nine study sections", async ({ page }) => {
-  await page.goto("/trabalhos/inteligencia-de-comercio");
+test("Observa study links to its public evidence", async ({ page }) => {
+  await page.goto("/trabalhos/observa");
+  await expect(page.getByRole("heading", { level: 1, name: "Observa" })).toBeVisible();
   await expect(page.getByRole("heading", { name: /01 \/ Contexto/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: /09 \/ Retrospectiva/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Repositório de evidência" })).toHaveAttribute(
+    "href",
+    "https://github.com/mitsuoleo/observa",
+  );
+  await expect(page.getByRole("link", { name: "Documentação" })).toHaveAttribute(
+    "href",
+    "https://github.com/mitsuoleo/observa/blob/main/docs/portfolio/evidence-2026-09-26.md",
+  );
 });
 
 test("command center opens and jumps to work", async ({ page }) => {
@@ -31,9 +40,9 @@ test("command center opens and jumps to work", async ({ page }) => {
 });
 
 test("language switch keeps the system", async ({ page }) => {
-  await page.goto("/trabalhos/inteligencia-de-comercio");
+  await page.goto("/trabalhos/observa");
   await page.getByRole("link", { name: "Versão em inglês" }).click();
-  await expect(page).toHaveURL(/\/en\/work\/commerce-intelligence/);
+  await expect(page).toHaveURL(/\/en\/work\/observa/);
   await expect(page.getByRole("heading", { name: /01 \/ Context/ })).toBeVisible();
 });
 
@@ -58,4 +67,16 @@ test("contact pages offer email and LinkedIn in both languages", async ({ page }
       "https://www.linkedin.com/in/leonardofukuda/",
     );
   }
+});
+
+test("resume pages link to a real PDF", async ({ page, request }) => {
+  for (const path of ["/curriculo", "/en/resume"]) {
+    await page.goto(path);
+    await expect(page.getByRole("link", { name: "CV (PDF)" }).first()).toHaveAttribute("href", "/cv.pdf");
+  }
+
+  const response = await request.get("/cv.pdf");
+  expect(response.ok(), `${response.status()} ${response.url()}`).toBeTruthy();
+  expect(response.headers()["content-type"]).toContain("application/pdf");
+  expect((await response.body()).subarray(0, 5).toString()).toBe("%PDF-");
 });

@@ -1,36 +1,26 @@
 ---
-type Kind = "commerce-intelligence" | "catalog" | "pipeline" | "shortener" | "promptvault";
+type Kind = "observa" | "pipeline" | "shortener" | "promptvault";
 const { kind } = Astro.props as { kind: Kind };
 ---
 
 {
-  kind === "commerce-intelligence" && (
-    <svg class="diagram" viewBox="0 0 420 160" fill="none" role="img" aria-label="Ingest, warehouse, serve">
-      <rect x="8" y="48" width="110" height="64" stroke="currentColor" />
-      <text x="63" y="84" text-anchor="middle" fill="currentColor" font-size="11">INGEST</text>
-      <path d="M118 80h36" stroke="currentColor" />
-      <rect x="154" y="36" width="120" height="88" stroke="currentColor" />
-      <text x="214" y="72" text-anchor="middle" fill="currentColor" font-size="11">WAREHOUSE</text>
-      <text x="214" y="92" text-anchor="middle" fill="currentColor" font-size="9" opacity="0.7">facts · dims</text>
-      <path d="M274 80h36" stroke="currentColor" />
-      <rect x="310" y="48" width="102" height="64" stroke="currentColor" />
-      <text x="361" y="84" text-anchor="middle" fill="currentColor" font-size="11">SERVE</text>
-    </svg>
-  )
-}
-{
-  kind === "catalog" && (
-    <svg class="diagram" viewBox="0 0 220 120" fill="none" aria-hidden="true">
-      <rect x="8" y="18" width="62" height="84" stroke="currentColor" stroke-width="1.2" />
-      <text x="39" y="40" text-anchor="middle" fill="currentColor" font-size="8">SKU</text>
-      <rect x="18" y="50" width="42" height="10" stroke="currentColor" />
-      <rect x="18" y="66" width="42" height="10" stroke="currentColor" />
-      <rect x="18" y="82" width="28" height="10" fill="currentColor" opacity="0.2" stroke="currentColor" />
-      <path d="M70 60h28" stroke="currentColor" />
-      <rect x="98" y="28" width="114" height="64" stroke="currentColor" stroke-width="1.2" />
-      <text x="155" y="50" text-anchor="middle" fill="currentColor" font-size="8">on-hand ≥ 0</text>
-      <path d="M112 72h86" stroke="currentColor" opacity="0.5" />
-      <text x="155" y="88" text-anchor="middle" fill="currentColor" font-size="7">receive · adjust</text>
+  kind === "observa" && (
+    <svg class="diagram" viewBox="0 0 420 160" fill="none" role="img" aria-label="Order, Kafka, Payment, Inventory, OpenTelemetry e Grafana">
+      <rect x="8" y="16" width="84" height="46" stroke="currentColor" />
+      <text x="50" y="43" text-anchor="middle" fill="currentColor" font-size="10">ORDER</text>
+      <path d="M92 39h28" stroke="currentColor" />
+      <rect x="120" y="16" width="84" height="46" stroke="currentColor" />
+      <text x="162" y="43" text-anchor="middle" fill="currentColor" font-size="10">KAFKA</text>
+      <path d="M204 39h28" stroke="currentColor" />
+      <rect x="232" y="16" width="180" height="46" stroke="currentColor" />
+      <text x="322" y="43" text-anchor="middle" fill="currentColor" font-size="10">PAYMENT · INVENTORY</text>
+      <path d="M50 62v57h70" stroke="currentColor" stroke-dasharray="3 3" />
+      <path d="M322 62v57h-94" stroke="currentColor" stroke-dasharray="3 3" />
+      <rect x="120" y="96" width="108" height="46" stroke="currentColor" />
+      <text x="174" y="123" text-anchor="middle" fill="currentColor" font-size="10">OTEL</text>
+      <path d="M228 119h60" stroke="currentColor" />
+      <rect x="288" y="96" width="124" height="46" stroke="currentColor" />
+      <text x="350" y="123" text-anchor="middle" fill="currentColor" font-size="10">GRAFANA</text>
     </svg>
   )
 }

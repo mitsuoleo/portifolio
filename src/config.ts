@@ -14,8 +14,8 @@ export const owner = {
   /** Fill before going public. Empty strings are omitted from contact surfaces. */
   email: "mitsuodeveloper@gmail.com",
   linkedin: "https://www.linkedin.com/in/leonardofukuda/",
-  /** Place a PDF at /public/cv.pdf and set this to "/cv.pdf". */
-  cv: "",
+  /** Public resume PDF. */
+  cv: "/cv.pdf",
   lab: "SYSTEMS LAB",
   coords: "23.55°S 46.63°W",
 };

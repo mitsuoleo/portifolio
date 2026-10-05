@@ -5,7 +5,7 @@ A public website that presents one person's work and story to people who might h
 ## Language
 
 **Portfolio**:
-The public website itself: pages, copy, and Systems a Visitor can open without an account. Shape: Index, Work, Profile, Lab, Contact, Resume, plus one page per System. This repository holds only the Portfolio, not Evidence Repos. It is a static Astro site hosted on Cloudflare Pages. It does not go public until the Commerce Intelligence Evidence Repo is cloneable.
+The public website itself: pages, copy, and Systems a Visitor can open without an account. Shape: Index, Work, Profile, Lab, Contact, Resume, plus one page per System. This repository holds only the Portfolio, not Evidence Repos. It is a static Astro site intended for Cloudflare Pages. The anchor System must link to a public, cloneable Evidence Repo before the Portfolio goes live.
 _Avoid_: Resume as the Surface, personal brand, landing page, web app
 
 **Owner**:
@@ -41,27 +41,19 @@ An explicit statement on Index that the Owner is available to be hired.
 _Avoid_: Badge, status, looking for opportunities
 
 **System**:
-The unit of proof. A documented computational system with a code (`SYS/001`), title, lead, year, status, domain, duties, and technologies mapped to the job they did. The full editorial study (nine sections) at launch is Commerce Intelligence. Other Systems may appear in Work or Lab without that study.
+The unit of proof. A documented computational system with a code (`SYS/001`), title, lead, year, status, domain, duties, and technologies mapped to the job they did. The full editorial study (nine sections) at launch is Observa. Other Systems may appear in Work or Lab without that study.
 _Avoid_: Project, portfolio piece, work sample, repo, tutorial, Case Study (retired term)
 
-**Commerce Intelligence**:
-The anchor System (`SYS/001`): a modular commerce analytics platform (ingest, analytical model, read API). Python, PostgreSQL, FastAPI, Docker. Evidence Repo is separate git and is not public yet. This page is the contract for what that repo must prove.
-_Avoid_: BI product, shop, employer dashboard
-
-**Catalog**:
-A secondary System: products, variants, and stock with no orders. FastAPI, Postgres, Operator UI as a React SPA in the Evidence Repo. Not the Index anchor.
-_Avoid_: Inventory service, e-commerce clone, ERP
-
-**Operator UI**:
-A backoffice screen that makes Catalog's invariants visible. Not an end-user shop.
-_Avoid_: Admin (unless we mean Django admin), dashboard, frontend app
+**Observa**:
+The anchor System (`SYS/001`): a local laboratory for diagnosing and recovering a distributed order journey. Python and Node.js services exchange Kafka events, persist effects in PostgreSQL, and correlate metrics, traces, and logs in Grafana. Its public Evidence Repo documents synthetic scenarios, reproducible commands, observed results, and limits. OrderFlow remains a read-only contract reference.
+_Avoid_: production payment platform, high-availability claim, Commerce Intelligence
 
 **Order Pipeline**:
 A secondary System: event-driven e-commerce order through payment and inventory without synchronous calls between domain services. Evidence Repo is polyglot (Python and NestJS). NestJS is supporting evidence.
 _Avoid_: OrderFlow (repo name as product language)
 
 **Link Shortener**:
-A secondary System: short links and clicks without putting the database on the redirect path. Evidence Repo is Go. UI in that repo is not the exhibit.
+A secondary System: short links and asynchronous click capture. Redis serves warm redirects; a cache miss reads PostgreSQL. Evidence Repo is Go. UI in that repo is not the exhibit.
 _Avoid_: URLshortner
 
 **Lab**:

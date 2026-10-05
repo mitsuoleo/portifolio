@@ -11,11 +11,11 @@ import SystemRow from "./SystemRow.astro";
 const { locale } = Astro.props as { locale: Locale };
 const t = copy[locale];
 const roleParts = t.role.split(" ");
-const stack = ["Python", "PostgreSQL", "FastAPI", "Docker", "SQL", "Go", "Redis"];
+const stack = ["Python", "PostgreSQL", "Kafka", "OpenTelemetry", "Docker", "Go", "Redis"];
 const rain =
   locale === "pt"
-    ? "INGEST → WAREHOUSE → SERVE   event_id idempotente   fact_sale dim_variant   POST /ingest/events   GET /metrics/sales   docker compose up   raw.jsonb → dw   request_id batch_id   on-hand ≥ 0   correlation_id = order_id   202 Accepted"
-    : "INGEST → WAREHOUSE → SERVE   idempotent event_id   fact_sale dim_variant   POST /ingest/events   GET /metrics/sales   docker compose up   raw.jsonb → dw   request_id batch_id   on-hand ≥ 0   correlation_id = order_id   202 Accepted";
+    ? "ORDER → KAFKA → PAYMENT → INVENTORY   correlation_id = order_id   W3C trace context   outbox   Grafana → Tempo → Loki   CONFIRMED · FAILED · CANCELLED   recuperação local"
+    : "ORDER → KAFKA → PAYMENT → INVENTORY   correlation_id = order_id   W3C trace context   outbox   Grafana → Tempo → Loki   CONFIRMED · FAILED · CANCELLED   local recovery";
 const rainBlock = Array.from({ length: 12 }, () => rain).join("\n");
 ---
 

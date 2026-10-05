@@ -17,8 +17,7 @@ export type Tech = {
 };
 
 export type SystemId =
-  | "commerce-intelligence"
-  | "catalog"
+  | "observa"
   | "pipeline"
   | "shortener"
   | "promptvault";
@@ -44,70 +43,44 @@ export type System = {
 
 export const systems: System[] = [
   {
-    id: "commerce-intelligence",
+    id: "observa",
     code: "SYS/001",
     year: 2026,
     status: "active",
-    domain: "Data",
+    domain: "Systems Design",
     featured: true,
     fullStudy: true,
     lab: false,
-    repo: "",
+    repo: "https://github.com/mitsuoleo/observa",
     demo: "",
-    docs: "",
+    docs: "https://github.com/mitsuoleo/observa/blob/main/docs/portfolio/evidence-2026-09-26.md",
     stack: [
-      { name: "Python", role: { pt: "ingestão, processamento e automação", en: "ingestion, processing, and automation" } },
-      { name: "PostgreSQL", role: { pt: "modelagem e armazenamento analítico", en: "modeling and analytical storage" } },
-      { name: "FastAPI", role: { pt: "fronteira de API e contratos", en: "API boundary and contracts" } },
-      { name: "Docker", role: { pt: "ambiente reproduzível e isolamento", en: "reproducible environment and isolation" } },
+      { name: "Python", role: { pt: "serviços Order e Notification", en: "Order and Notification services" } },
+      { name: "Node.js", role: { pt: "serviços Payment e Inventory", en: "Payment and Inventory services" } },
+      { name: "Kafka", role: { pt: "eventos de domínio", en: "domain events" } },
+      { name: "PostgreSQL", role: { pt: "efeitos, deduplicação e outbox", en: "effects, deduplication, and outbox" } },
+      { name: "Kubernetes", role: { pt: "laboratório local reproduzível", en: "reproducible local lab" } },
+      { name: "Grafana", role: { pt: "métricas, traces e logs correlacionados", en: "correlated metrics, traces, and logs" } },
     ],
-    slugs: { pt: "inteligencia-de-comercio", en: "commerce-intelligence" },
-    titles: { pt: "Commerce Intelligence", en: "Commerce Intelligence" },
+    slugs: { pt: "observa", en: "observa" },
+    titles: { pt: "Observa", en: "Observa" },
     leads: {
-      pt: "Plataforma modular de analytics para comércio: ingestão com contrato, modelo analítico e API de leitura.",
-      en: "A modular commerce analytics platform: contracted ingestion, an analytical model, and a read API.",
+      pt: "Laboratório local de pedidos distribuídos para demonstrar diagnóstico, compensação e recuperação com observabilidade de ponta a ponta.",
+      en: "A local distributed-order lab demonstrating diagnosis, compensation, and recovery with end-to-end observability.",
     },
     duties: {
       pt: [
-        "Desenho do pipeline e dos contratos de evento",
-        "Modelo analítico no PostgreSQL",
-        "API de consulta e jobs idempotentes",
-        "Compose, testes e documentação de decisão",
+        "Quatro serviços de domínio ligados por eventos Kafka",
+        "Outbox e deduplicação por event_id no PostgreSQL",
+        "Traces, métricas e logs correlacionados no Grafana",
+        "Demonstração e recuperação reproduzíveis no Kubernetes local",
       ],
       en: [
-        "Pipeline and event-contract design",
-        "Analytical model in PostgreSQL",
-        "Query API and idempotent jobs",
-        "Compose, tests, and decision docs",
+        "Four domain services connected by Kafka events",
+        "PostgreSQL outbox and event_id deduplication",
+        "Correlated traces, metrics, and logs in Grafana",
+        "Reproducible demo and recovery in local Kubernetes",
       ],
-    },
-  },
-  {
-    id: "catalog",
-    code: "SYS/002",
-    year: 2026,
-    status: "active",
-    domain: "Backend",
-    featured: true,
-    fullStudy: false,
-    lab: false,
-    repo: "",
-    demo: "",
-    docs: "",
-    stack: [
-      { name: "FastAPI", role: { pt: "API de operação do catálogo", en: "catalog operator API" } },
-      { name: "PostgreSQL", role: { pt: "produtos, variantes e saldo", en: "products, variants, and on-hand" } },
-      { name: "React", role: { pt: "UI de operação que torna o invariante visível", en: "operator UI that makes the invariant visible" } },
-    ],
-    slugs: { pt: "catalogo", en: "catalog" },
-    titles: { pt: "Catálogo", en: "Catalog" },
-    leads: {
-      pt: "Produtos, variantes e estoque sem pedido. O saldo não fica negativo; a identidade vive na variante.",
-      en: "Products, variants, and stock — no orders. On-hand cannot go negative; identity lives on the variant.",
-    },
-    duties: {
-      pt: ["Invariantes de estoque", "Identidade de variante", "API e SPA de operação"],
-      en: ["Stock invariants", "Variant identity", "Operator API and SPA"],
     },
   },
   {
@@ -148,7 +121,7 @@ export const systems: System[] = [
     featured: false,
     fullStudy: false,
     lab: false,
-    repo: "",
+    repo: "https://github.com/mitsuoleo/encurta",
     demo: "",
     docs: "",
     stack: [
@@ -159,12 +132,12 @@ export const systems: System[] = [
     slugs: { pt: "encurtador", en: "link-shortener" },
     titles: { pt: "Encurtador", en: "Link shortener" },
     leads: {
-      pt: "O clique lê o cache e devolve 302. Analytics entra num stream, fora do caminho crítico.",
-      en: "A click reads cache and returns 302. Analytics goes to a stream, off the critical path.",
+      pt: "O clique consulta Redis, recorre ao PostgreSQL em cache miss e devolve 302. Analytics segue em stream.",
+      en: "A click checks Redis, falls back to PostgreSQL on a cache miss, and returns 302. Analytics follows on a stream.",
     },
     duties: {
-      pt: ["Redirect sem banco no caminho", "Stream de cliques", "Identidade do link curto"],
-      en: ["Redirect without the database on the path", "Click stream", "Short-link identity"],
+      pt: ["Lookup Redis com fallback PostgreSQL", "Stream de cliques", "Identidade do link curto"],
+      en: ["Redis lookup with PostgreSQL fallback", "Click stream", "Short-link identity"],
     },
   },
   {
@@ -198,7 +171,7 @@ export const systems: System[] = [
 export const featuredSystems = systems.filter((s) => s.featured);
 export const workSystems = systems.filter((s) => !s.lab);
 export const labSystems = systems.filter((s) => s.lab);
-export const anchor = systems.find((s) => s.id === "commerce-intelligence")!;
+export const anchor = systems.find((s) => s.id === "observa")!;
 export const recentExperiment = systems.find((s) => s.id === "promptvault")!;
 
 export function systemBySlug(slug: string, locale: Locale) {
