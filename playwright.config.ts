@@ -9,7 +9,7 @@ export default defineConfig({
   webServer: {
     command: "npm run dev -- --host 127.0.0.1 --port 4333",
     url: "http://127.0.0.1:4333",
-    reuseExistingServer: false,
+    reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
