@@ -1,0 +1,13 @@
+---
+import Base from "../layouts/Base.astro";
+import HomePage from "../components/HomePage.astro";
+import { owner } from "../config";
+import { copy } from "../copy";
+
+const t = copy.pt;
+const title = `${owner.name} · ${t.role}`;
+---
+
+<Base locale="pt" title={title} description={t.proposition}>
+  <HomePage locale="pt" />
+</Base>

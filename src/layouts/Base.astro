@@ -1,0 +1,70 @@
+---
+import type { Locale } from "../config";
+import { locales, owner, pagePath } from "../config";
+import { copy } from "../copy";
+import { navItems } from "../content/systems";
+import { switchPath } from "../switch-path";
+import CommandCenter from "../components/CommandCenter.astro";
+import Live from "../components/Live.astro";
+import "@fontsource-variable/montserrat";
+import "../styles/global.css";
+
+type Props = {
+  locale: Locale;
+  title: string;
+  description: string;
+};
+
+const { locale, title, description } = Astro.props;
+const t = copy[locale];
+const loc = locales[locale];
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const otherHref = switchPath(path === "" ? "/" : path, locale, loc.switchTo);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const nav = navItems(locale);
+---
+
+<html lang={loc.html}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#101010" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:site_name" content={t.ogSite} />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="alternate" hreflang={locales.pt.html} href={new URL(switchPath(path, locale, "pt"), Astro.site).href} />
+    <link rel="alternate" hreflang={locales.en.html} href={new URL(switchPath(path, locale, "en"), Astro.site).href} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip" href="#content">{t.skip}</a>
+    <header class="top">
+      <a class="brand" href={pagePath("home", locale)} aria-label={t.labAria}>{owner.name}</a>
+      <nav class="nav" aria-label={t.navAria}>
+        {
+          nav.map((item) => {
+            const href = item.href.replace(/\/$/, "") || "/";
+            const current = path === href;
+            return (
+              <a href={item.href} aria-current={current ? "page" : undefined}>
+                {t.nav[item.key]}
+              </a>
+            );
+          })
+        }
+        <CommandCenter locale={locale} />
+        <a class="lang" href={otherHref} hreflang={locales[loc.switchTo].html} aria-label={t.langAria}>
+          {loc.switchLabel}
+        </a>
+      </nav>
+    </header>
+    <slot />
+    <footer class="city">Copyright © 2026 {owner.name}</footer>
+    <Live />
+  </body>
+</html>

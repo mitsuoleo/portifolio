@@ -1,0 +1,18 @@
+---
+import Base from "../../../layouts/Base.astro";
+import SystemPage from "../../../components/SystemPage.astro";
+import { systems } from "../../../content/systems";
+
+export function getStaticPaths() {
+  return systems.map((system) => ({
+    params: { slug: system.slugs.en },
+    props: { system },
+  }));
+}
+
+const { system } = Astro.props;
+---
+
+<Base locale="en" title={`${system.code} ${system.titles.en}`} description={system.leads.en}>
+  <SystemPage system={system} locale="en" />
+</Base>

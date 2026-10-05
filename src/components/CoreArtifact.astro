@@ -1,0 +1,144 @@
+---
+import type { Locale } from "../config";
+import { copy } from "../copy";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+---
+
+<div class="artifact" data-artifact>
+  <svg class="artifact-fallback" viewBox="0 0 200 200" role="img" aria-label={t.artifactLabel}>
+    <rect x="70" y="70" width="60" height="60" fill="none" stroke="currentColor" stroke-width="1.2" />
+    <rect x="40" y="88" width="28" height="24" fill="none" stroke="currentColor" opacity="0.7" />
+    <rect x="132" y="88" width="28" height="24" fill="none" stroke="currentColor" opacity="0.7" />
+    <rect x="88" y="40" width="24" height="28" fill="none" stroke="currentColor" opacity="0.7" />
+    <rect x="88" y="132" width="24" height="28" fill="none" stroke="currentColor" opacity="0.7" />
+    <path d="M68 100H40M160 100h-28M100 68V40M100 160v-28" stroke="currentColor" opacity="0.55" />
+    <circle cx="100" cy="100" r="6" fill="none" stroke="#38D5E6" />
+  </svg>
+</div>
+
+<script>
+  const root = document.querySelector("[data-artifact]") as HTMLElement | null;
+  if (root) {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const idle = "requestIdleCallback" in window
+      ? window.requestIdleCallback.bind(window)
+      : (cb: () => void) => setTimeout(cb, 200);
+
+    idle(async () => {
+      try {
+        const probe = document.createElement("canvas");
+        if (!(probe.getContext("webgl") || probe.getContext("experimental-webgl"))) return;
+
+        const THREE = await import("three");
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 40);
+        camera.position.set(4.2, 3.2, 4.8);
+        camera.lookAt(0, 0, 0);
+
+        const canvas = document.createElement("canvas");
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        root.appendChild(canvas);
+        root.classList.add("is-live");
+
+        const cobalt = new THREE.Color("#2457F5");
+        const aqua = new THREE.Color("#38D5E6");
+        const ink = new THREE.Color("#111315");
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+        const key = new THREE.DirectionalLight(0xffffff, 0.7);
+        key.position.set(3, 5, 2);
+        scene.add(key);
+        const rim = new THREE.PointLight(0x38d5e6, 0.55);
+        rim.position.set(-2, 1.5, 3);
+        scene.add(rim);
+
+        const core = new THREE.Mesh(
+          new THREE.BoxGeometry(1.15, 1.15, 1.15),
+          new THREE.MeshStandardMaterial({
+            color: cobalt,
+            roughness: 0.28,
+            metalness: 0.2,
+            transparent: true,
+            opacity: 0.88,
+          }),
+        );
+        scene.add(core);
+
+        const arms: THREE.Mesh[] = [];
+        const offsets: [number, number, number][] = [
+          [1.55, 0, 0],
+          [-1.55, 0, 0],
+          [0, 1.55, 0],
+          [0, -1.55, 0],
+          [0, 0, 1.55],
+          [0, 0, -1.55],
+        ];
+        for (const [x, y, z] of offsets) {
+          const mesh = new THREE.Mesh(
+            new THREE.BoxGeometry(0.55, 0.55, 0.55),
+            new THREE.MeshStandardMaterial({
+              color: aqua,
+              roughness: 0.35,
+              metalness: 0.15,
+              transparent: true,
+              opacity: 0.55,
+            }),
+          );
+          mesh.position.set(x, y, z);
+          scene.add(mesh);
+          arms.push(mesh);
+        }
+
+        const lines = new THREE.LineSegments(
+          new THREE.EdgesGeometry(new THREE.BoxGeometry(1.15, 1.15, 1.15)),
+          new THREE.LineBasicMaterial({ color: ink, transparent: true, opacity: 0.35 }),
+        );
+        scene.add(lines);
+
+        const setSize = () => {
+          const w = root.clientWidth;
+          const h = root.clientHeight;
+          renderer.setSize(w, h, false);
+          camera.aspect = w / Math.max(h, 1);
+          camera.updateProjectionMatrix();
+        };
+        setSize();
+        window.addEventListener("resize", setSize, { passive: true });
+
+        let mx = 0;
+        let my = 0;
+        const onMove = (e: PointerEvent) => {
+          const r = root.getBoundingClientRect();
+          mx = ((e.clientX - r.left) / r.width - 0.5) * 0.6;
+          my = ((e.clientY - r.top) / r.height - 0.5) * 0.6;
+        };
+        root.addEventListener("pointermove", onMove, { passive: true });
+
+        let t0 = performance.now();
+        const tick = (now: number) => {
+          const t = (now - t0) / 1000;
+          if (!reduce) {
+            core.rotation.y = t * 0.18 + mx;
+            core.rotation.x = 0.2 + my;
+            lines.rotation.copy(core.rotation);
+            const open = Math.min(1, window.scrollY / 520);
+            arms.forEach((arm, i) => {
+              const [x, y, z] = offsets[i];
+              const k = 1 + open * 0.55;
+              arm.position.set(x * k, y * k, z * k);
+              arm.rotation.y = t * 0.12;
+            });
+          }
+          renderer.render(scene, camera);
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      } catch {
+        /* SVG fallback remains */
+      }
+    });
+  }
+</script>

@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro";
+import ProfilePage from "../components/ProfilePage.astro";
+import { owner } from "../config";
+import { copy } from "../copy";
+
+const t = copy.pt;
+---
+
+<Base locale="pt" title={`${t.profileTitle} · ${owner.name}`} description={t.profileBlurb}>
+  <ProfilePage locale="pt" />
+</Base>

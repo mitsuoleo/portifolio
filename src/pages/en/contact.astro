@@ -1,0 +1,12 @@
+---
+import Base from "../../layouts/Base.astro";
+import ContactPage from "../../components/ContactPage.astro";
+import { owner } from "../../config";
+import { copy } from "../../copy";
+
+const t = copy.en;
+---
+
+<Base locale="en" title={`${t.contactTitle} · ${owner.name}`} description={t.contactLead}>
+  <ContactPage locale="en" />
+</Base>

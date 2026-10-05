@@ -1,0 +1,126 @@
+---
+import type { Locale } from "../config";
+import { owner, pagePath } from "../config";
+import { copy } from "../copy";
+import { systems, systemHref } from "../content/systems";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+
+type Command = { id: string; label: string; href: string; keywords: string };
+
+const commands: Command[] = [
+  { id: "home", label: t.nav.home, href: pagePath("home", locale), keywords: "index home início" },
+  { id: "work", label: t.nav.work, href: pagePath("work", locale), keywords: "work trabalhos projects sistemas sql postgres" },
+  { id: "profile", label: t.nav.profile, href: pagePath("profile", locale), keywords: "profile perfil" },
+  { id: "lab", label: t.nav.lab, href: pagePath("lab", locale), keywords: "lab experimento" },
+  { id: "contact", label: t.contactTitle, href: pagePath("contact", locale), keywords: "contact contato email" },
+  { id: "resume", label: t.resumeWeb, href: pagePath("resume", locale), keywords: "resume currículo cv open resume" },
+  { id: "github", label: t.github, href: owner.github, keywords: "github" },
+  ...systems.map((s) => ({
+    id: s.id,
+    label: `${s.code} ${s.titles[locale]}`,
+    href: systemHref(s, locale),
+    keywords: `${s.code} ${s.titles.pt} ${s.titles.en} ${s.stack.map((x) => x.name).join(" ")} ${s.domain} ${s.leads.pt} ${s.leads.en} architecture`,
+  })),
+];
+
+if (owner.email) {
+  commands.push({ id: "email", label: t.email, href: `mailto:${owner.email}`, keywords: "email mail contato" });
+}
+if (owner.linkedin) {
+  commands.push({ id: "linkedin", label: t.linkedin, href: owner.linkedin, keywords: "linkedin" });
+}
+if (owner.cv) {
+  commands.push({ id: "cv", label: t.cv, href: owner.cv, keywords: "cv pdf currículo resume" });
+}
+---
+
+<button type="button" class="cmd-open" data-cmd-open aria-haspopup="dialog" aria-controls="command-center">
+  {t.command}
+  <span class="cmd-kbd">{t.commandHint}</span>
+</button>
+
+<dialog class="cmd-dialog" id="command-center" data-cmd-dialog aria-labelledby="cmd-title">
+  <h2 id="cmd-title" class="visually-hidden">{t.commandTitle}</h2>
+  <input type="search" data-cmd-input placeholder={t.commandPlaceholder} aria-label={t.commandTitle} autocomplete="off" />
+  <ul class="cmd-list" data-cmd-list></ul>
+  <p class="cmd-empty" data-cmd-empty hidden>{t.commandEmpty}</p>
+</dialog>
+
+<script type="application/json" data-cmd-json set:html={JSON.stringify(commands)} />
+
+<script>
+  const json = document.querySelector("[data-cmd-json]");
+  const openBtn = document.querySelector("[data-cmd-open]");
+  const dialog = document.querySelector("[data-cmd-dialog]") as HTMLDialogElement | null;
+  const input = document.querySelector("[data-cmd-input]") as HTMLInputElement | null;
+  const list = document.querySelector("[data-cmd-list]");
+  const empty = document.querySelector("[data-cmd-empty]") as HTMLElement | null;
+  const commands = json ? (JSON.parse(json.textContent || "[]") as { id: string; label: string; href: string; keywords: string }[]) : [];
+
+  if (openBtn && dialog && input && list && empty) {
+    let active = 0;
+    const render = (q: string) => {
+      const query = q.trim().toLowerCase();
+      const hits = commands.filter((c) => {
+        const hay = `${c.label} ${c.keywords}`.toLowerCase();
+        return !query || query.split(/\s+/).every((part) => hay.includes(part));
+      });
+      list.innerHTML = hits
+        .map(
+          (c, i) =>
+            `<li><a href="${c.href}" data-i="${i}" data-active="${i === 0}">${c.label}<span class="cmd-kbd">${c.id}</span></a></li>`,
+        )
+        .join("");
+      empty.hidden = hits.length > 0;
+      active = 0;
+    };
+    const open = () => {
+      dialog.showModal();
+      render("");
+      input.value = "";
+      input.focus();
+    };
+    const close = () => dialog.close();
+    openBtn.addEventListener("click", open);
+    window.addEventListener("keydown", (e) => {
+      const target = e.target as HTMLElement | null;
+      const inField = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        dialog.open ? close() : open();
+      }
+      if (e.key === "/" && !inField && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        e.preventDefault();
+        open();
+      }
+      if (!dialog.open) return;
+      const links = [...list.querySelectorAll("a")];
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        active = Math.min(active + 1, Math.max(links.length - 1, 0));
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        active = Math.max(active - 1, 0);
+      }
+      links.forEach((a, i) => a.setAttribute("data-active", String(i === active)));
+      if (e.key === "Enter" && links[active]) {
+        e.preventDefault();
+        links[active].click();
+      }
+    });
+    input.addEventListener("input", () => render(input.value));
+  }
+</script>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+</style>

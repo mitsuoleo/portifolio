@@ -1,0 +1,36 @@
+---
+import type { Locale } from "../config";
+import type { System } from "../content/systems";
+import { copy } from "../copy";
+import { systemHref } from "../content/systems";
+
+type Props = { system: System; locale: Locale };
+
+const { system, locale } = Astro.props;
+const t = copy[locale];
+const hues: Record<string, number> = {
+  "commerce-intelligence": 152,
+  catalog: 210,
+  pipeline: 268,
+  shortener: 28,
+  promptvault: 320,
+};
+const hue = hues[system.id] ?? 160;
+---
+
+<a class="system-row" href={systemHref(system, locale)} data-system data-domain={system.domain} data-year={system.year} data-status={system.status} data-tech={system.stack.map((s) => s.name).join(",")} style={`--hue: ${hue}`}>
+  <div class="system-thumb">
+    <h2 class="system-title">{system.titles[locale]}</h2>
+  </div>
+  <div class="system-meta">
+    <div>
+      <span class="code">{system.code}</span>
+      <strong>{system.titles[locale]}</strong>
+      <p class="lead">{t.statuses[system.status]}</p>
+    </div>
+    <div class="icon-btns" aria-hidden="true">
+      <span>&lt;/&gt;</span>
+      <span>↗</span>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,35 @@
+<script>
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const markIn = (el: Element) => el.classList.add("is-in");
+
+  if (reduce) {
+    document.querySelectorAll("[data-reveal]").forEach(markIn);
+  } else {
+    document.documentElement.classList.add("motion");
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            markIn(entry.target);
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    );
+    document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+
+    const glow = document.querySelector("[data-glow]");
+    if (glow instanceof HTMLElement) {
+      glow.addEventListener(
+        "pointermove",
+        (event) => {
+          const box = glow.getBoundingClientRect();
+          glow.style.setProperty("--mx", `${event.clientX - box.left}px`);
+          glow.style.setProperty("--my", `${event.clientY - box.top}px`);
+        },
+        { passive: true },
+      );
+    }
+  }
+</script>

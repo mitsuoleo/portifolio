@@ -1,0 +1,24 @@
+---
+import type { Locale } from "../config";
+import { copy } from "../copy";
+import { anchor, recentExperiment } from "../content/systems";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+---
+
+<section class="status-block" aria-labelledby="status-title" data-reveal>
+  <h2 id="status-title" class="section-label status-head">{t.statusTitle}</h2>
+  <div>
+    <p class="section-label">{t.building}</p>
+    <p>{anchor.titles[locale]}</p>
+  </div>
+  <div>
+    <p class="section-label">{t.experiment}</p>
+    <p>{recentExperiment.titles[locale]}</p>
+  </div>
+  <div>
+    <p class="section-label">{t.availability}</p>
+    <p>{t.availabilityValue}</p>
+  </div>
+</section>

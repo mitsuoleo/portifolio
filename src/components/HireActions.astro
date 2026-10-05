@@ -1,0 +1,24 @@
+---
+import type { Locale } from "../config";
+import { owner } from "../config";
+import { copy } from "../copy";
+
+const { locale, class: className } = Astro.props as { locale: Locale; class?: string };
+const t = copy[locale];
+const actions = [
+  owner.email && { href: `mailto:${owner.email}`, label: t.email, primary: true },
+  owner.linkedin && { href: owner.linkedin, label: t.linkedin, primary: true },
+  { href: owner.github, label: t.github, primary: !owner.email && !owner.linkedin },
+  owner.cv && { href: owner.cv, label: t.cv, primary: false },
+].filter(Boolean) as { href: string; label: string; primary: boolean }[];
+---
+
+<nav class={className ?? "actions"} aria-label={t.hire}>
+  {
+    actions.map((a) => (
+      <a class={a.primary ? "primary" : "ghost"} href={a.href}>
+        {a.label}
+      </a>
+    ))
+  }
+</nav>

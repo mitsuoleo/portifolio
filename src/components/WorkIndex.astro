@@ -1,0 +1,94 @@
+---
+import type { Locale } from "../config";
+import { copy } from "../copy";
+import { domains, techs, workSystems, years } from "../content/systems";
+import SystemRow from "./SystemRow.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+---
+
+<main id="content" class="shell page">
+  <p class="section-label">{t.workEyebrow}</p>
+  <h1>{t.systems}</h1>
+  <p class="bio">{t.workLead}</p>
+  <form class="filters" data-filters>
+    <label>
+      {t.filterDomain}
+      <select name="domain" data-filter="domain">
+        <option value="">{t.filterAll}</option>
+        {domains().map((d) => <option value={d}>{t.domains[d]}</option>)}
+      </select>
+    </label>
+    <label>
+      {t.filterTech}
+      <select name="tech" data-filter="tech">
+        <option value="">{t.filterAll}</option>
+        {techs().map((name) => <option value={name}>{name}</option>)}
+      </select>
+    </label>
+    <label>
+      {t.filterYear}
+      <select name="year" data-filter="year">
+        <option value="">{t.filterAll}</option>
+        {years().map((y) => <option value={String(y)}>{y}</option>)}
+      </select>
+    </label>
+    <label>
+      {t.filterStatus}
+      <select name="status" data-filter="status">
+        <option value="">{t.filterAll}</option>
+        <option value="active">{t.statuses.active}</option>
+        <option value="archived">{t.statuses.archived}</option>
+      </select>
+    </label>
+  </form>
+  <div class="systems" data-work-list>
+    {workSystems.map((s) => <SystemRow system={s} locale={locale} />)}
+  </div>
+  <p class="lead" data-empty hidden>{t.filterEmpty}</p>
+  <p>
+    <button type="button" class="btn" data-reset>{t.resetFilters}</button>
+  </p>
+</main>
+
+<script>
+  const form = document.querySelector("[data-filters]") as HTMLFormElement | null;
+  const rows = [...document.querySelectorAll("[data-system]")] as HTMLElement[];
+  const empty = document.querySelector("[data-empty]") as HTMLElement | null;
+  const reset = document.querySelector("[data-reset]") as HTMLButtonElement | null;
+  if (form && empty) {
+    const apply = () => {
+      const data = new FormData(form);
+      const domain = String(data.get("domain") || "");
+      const tech = String(data.get("tech") || "");
+      const year = String(data.get("year") || "");
+      const status = String(data.get("status") || "");
+      let shown = 0;
+      for (const row of rows) {
+        const okDomain = !domain || row.dataset.domain === domain;
+        const okTech = !tech || (row.dataset.tech || "").split(",").includes(tech);
+        const okYear = !year || row.dataset.year === year;
+        const okStatus = !status || row.dataset.status === status;
+        const show = okDomain && okTech && okYear && okStatus;
+        row.hidden = !show;
+        if (show) shown += 1;
+      }
+      empty.hidden = shown > 0;
+    };
+    form.addEventListener("change", apply);
+    reset?.addEventListener("click", () => {
+      form.reset();
+      apply();
+    });
+    const params = new URLSearchParams(window.location.search);
+    for (const key of ["domain", "tech", "year", "status"]) {
+      const v = params.get(key);
+      if (v) {
+        const select = form.querySelector(`[name="${key}"]`) as HTMLSelectElement | null;
+        if (select) select.value = v;
+      }
+    }
+    apply();
+  }
+</script>

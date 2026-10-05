@@ -1,0 +1,57 @@
+---
+import type { Locale } from "../config";
+import { owner, pagePath } from "../config";
+import { copy } from "../copy";
+import { featuredSystems } from "../content/systems";
+import HireActions from "./HireActions.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+const principles =
+  locale === "pt"
+    ? [
+        "Regras que não podem falhar em silêncio ficam no modelo e no teste, não no slide.",
+        "Tecnologia aparece pela função que desempenhou no sistema.",
+        "Empregadores não são nomeados. O exhibit é o sistema.",
+      ]
+    : [
+        "Rules that cannot fail quietly live in the model and the test, not on a slide.",
+        "A technology appears by the job it did in the system.",
+        "Employers are never named. The exhibit is the system.",
+      ];
+---
+
+<main id="content" class="shell page">
+  <p class="section-label">{owner.lab}</p>
+  <h1>{t.profileTitle}</h1>
+  <p class="role">{t.role} · {t.place} · {t.stack}</p>
+  <p class="lead-display editorial">{t.profileBlurb}</p>
+  <div class="prose">
+    <h2>{locale === "pt" ? "Princípios" : "Principles"}</h2>
+    <ul>
+      {principles.map((p) => <li>{p}</li>)}
+    </ul>
+    <h2>{locale === "pt" ? "Sistemas em evidência" : "Systems on exhibit"}</h2>
+    <ul>
+      {
+        featuredSystems.map((s) => (
+          <li>
+            {s.code} {s.titles[locale]} — {s.leads[locale]}
+          </li>
+        ))
+      }
+    </ul>
+    <h2>{locale === "pt" ? "Competências no contexto" : "Skills in context"}</h2>
+    <p>
+      {
+        locale === "pt"
+          ? "Python para ingestão e jobs; SQL e PostgreSQL para modelo e consulta; FastAPI para o contrato da borda; Docker para o laboratório reproduzível. React aparece só onde o invariante precisa ser visto."
+          : "Python for ingest and jobs; SQL and PostgreSQL for model and query; FastAPI for the edge contract; Docker for the reproducible lab. React appears only where an invariant has to be seen."
+      }
+    </p>
+    <p>
+      <a href={pagePath("resume", locale)}>{t.resumeWeb}</a>
+    </p>
+  </div>
+  <HireActions locale={locale} />
+</main>

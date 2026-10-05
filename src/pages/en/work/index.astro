@@ -1,0 +1,12 @@
+---
+import Base from "../../../layouts/Base.astro";
+import WorkIndex from "../../../components/WorkIndex.astro";
+import { owner } from "../../../config";
+import { copy } from "../../../copy";
+
+const t = copy.en;
+---
+
+<Base locale="en" title={`${t.workTitle} · ${owner.lab}`} description={t.workLead}>
+  <WorkIndex locale="en" />
+</Base>

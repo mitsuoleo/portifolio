@@ -1,0 +1,89 @@
+---
+import type { Locale } from "../config";
+import { owner, pagePath } from "../config";
+import { copy } from "../copy";
+import { featuredSystems } from "../content/systems";
+import HireActions from "./HireActions.astro";
+import SocialIcons from "./SocialIcons.astro";
+import StatusBlock from "./StatusBlock.astro";
+import SystemRow from "./SystemRow.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+const roleParts = t.role.split(" ");
+const stack = ["Python", "PostgreSQL", "FastAPI", "Docker", "SQL", "Go", "Redis"];
+const rain =
+  locale === "pt"
+    ? "INGEST → WAREHOUSE → SERVE   event_id idempotente   fact_sale dim_variant   POST /ingest/events   GET /metrics/sales   docker compose up   raw.jsonb → dw   request_id batch_id   on-hand ≥ 0   correlation_id = order_id   202 Accepted"
+    : "INGEST → WAREHOUSE → SERVE   idempotent event_id   fact_sale dim_variant   POST /ingest/events   GET /metrics/sales   docker compose up   raw.jsonb → dw   request_id batch_id   on-hand ≥ 0   correlation_id = order_id   202 Accepted";
+const rainBlock = Array.from({ length: 12 }, () => rain).join("\n");
+---
+
+<main id="content" class="shell">
+  <section class="hero" data-glow>
+    <div class="hero-text">
+      <ul class="kicker enter">
+        <li>{t.hi} {owner.name}</li>
+      </ul>
+      <h1 class="enter delay-1">
+        {roleParts[0]}
+        <br />
+        {roleParts.slice(1).join(" ")}
+      </h1>
+      <p class="lead-display enter delay-2">{t.heroBefore}<span class="accent">{t.heroAccent}</span>{t.heroAfter}</p>
+      <SocialIcons locale={locale} />
+    </div>
+  </section>
+
+  <div class="marquee" aria-label={t.stack}>
+    <div class="marquee-track">
+      <ul class="tags">
+        {stack.map((name) => <li>{name}</li>)}
+      </ul>
+      <ul class="tags" aria-hidden="true">
+        {stack.map((name) => <li>{name}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-head enter delay-3">
+    <h2 class="display">{t.areasTitle}</h2>
+  </div>
+  <div class="do-grid" data-reveal>
+    <div class="areas">
+      {
+        t.areas.map((a) => (
+          <details class="area">
+            <summary>{a.title}</summary>
+            <p>{a.body}</p>
+          </details>
+        ))
+      }
+    </div>
+    <div class="code-rain" aria-hidden="true">
+      <pre>{rainBlock}{"\n"}{rainBlock}</pre>
+    </div>
+  </div>
+
+  <div class="section-head" data-reveal>
+    <p class="section-label">{t.workEyebrow}</p>
+    <h2>{t.systems}</h2>
+  </div>
+  <div class="systems" data-reveal>
+    {featuredSystems.map((s) => <SystemRow system={s} locale={locale} />)}
+  </div>
+
+  <StatusBlock locale={locale} />
+
+  <div class="profile-strip" data-reveal>
+    <p class="bio editorial">{t.profileBlurb}</p>
+    <a class="btn" href={pagePath("profile", locale)}>{t.profileCta}</a>
+  </div>
+
+  <section class="cta-band" data-reveal>
+    <p class="section-label">{t.contactTitle}</p>
+    <h2>{t.contactCta}</h2>
+    <p class="lead">{t.contactLead}</p>
+    <HireActions locale={locale} />
+  </section>
+</main>

@@ -1,0 +1,15 @@
+---
+import type { Locale } from "../config";
+import { copy } from "../copy";
+import HireActions from "./HireActions.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+---
+
+<main id="content" class="shell page">
+  <h1>{t.contactTitle}</h1>
+  <p class="lead-display">{t.contactCta}</p>
+  <p class="bio">{t.contactLead}</p>
+  <HireActions locale={locale} />
+</main>

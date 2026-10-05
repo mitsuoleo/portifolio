@@ -1,0 +1,79 @@
+---
+import type { Locale } from "../config";
+import { pagePath } from "../config";
+import { copy } from "../copy";
+import { studies, shorts } from "../content/studies";
+import type { System } from "../content/systems";
+import Diagram from "./Diagram.astro";
+
+type Props = { system: System; locale: Locale };
+
+const { system, locale } = Astro.props;
+const t = copy[locale];
+const study = studies[system.id]?.[locale];
+const short = shorts[system.id]?.[locale];
+const keys = ["context", "role", "architecture", "data", "decisions", "implementation", "product", "results", "retro"] as const;
+---
+
+<article id="content" class="shell page">
+  <a class="back" href={pagePath("work", locale)}>{t.back}</a>
+  <p class="section-label">{system.code} · {system.year} / {t.statuses[system.status]}</p>
+  <h1>{system.titles[locale]}</h1>
+  <p class="lead-display">{system.leads[locale]}</p>
+  <div class="meta">
+    <span>{t.domains[system.domain]}</span>
+    {system.stack.map((s) => <span>{s.name}</span>)}
+    {
+      system.repo ? (
+        <a href={system.repo}>{t.evidence}</a>
+      ) : (
+        <span>{t.evidenceSoon}</span>
+      )
+    }
+    {system.demo && <a href={system.demo}>{t.demo}</a>}
+    {system.docs && <a href={system.docs}>{t.docs}</a>}
+  </div>
+  <ul class="meta-line">
+    {system.stack.map((s) => (
+      <li>
+        {s.name} — {s.role[locale]}
+      </li>
+    ))}
+  </ul>
+  <ul class="meta-line">
+    {system.duties[locale].map((d) => <li>{d}</li>)}
+  </ul>
+  <div class="arch-svg">
+    <Diagram kind={system.id} />
+  </div>
+  {
+    study ? (
+      <div class="prose">
+        {keys.map((key) => {
+          const block = study[key];
+          return (
+            <section>
+              <h2>{t.section[key]}</h2>
+              <p>{block.intro}</p>
+              {block.items && (
+                <ul>
+                  {block.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          );
+        })}
+      </div>
+    ) : (
+      <div class="prose">
+        <p>{short}</p>
+        <p>{t.shortStudy}</p>
+        <p>
+          <a href={pagePath("work", locale)}>{t.workTitle}</a>
+        </p>
+      </div>
+    )
+  }
+</article>

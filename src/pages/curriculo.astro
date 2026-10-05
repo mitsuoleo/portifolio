@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro";
+import ResumePage from "../components/ResumePage.astro";
+import { owner } from "../config";
+import { copy } from "../copy";
+
+const t = copy.pt;
+---
+
+<Base locale="pt" title={`${t.resumeTitle} · ${owner.name}`} description={t.resumeLead}>
+  <ResumePage locale="pt" />
+</Base>

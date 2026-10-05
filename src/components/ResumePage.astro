@@ -1,0 +1,40 @@
+---
+import type { Locale } from "../config";
+import { owner } from "../config";
+import { copy } from "../copy";
+import { workSystems } from "../content/systems";
+import HireActions from "./HireActions.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+---
+
+<main id="content" class="shell page">
+  <h1>{t.resumeTitle}</h1>
+  <p class="role">{owner.name} · {t.role}</p>
+  <p class="bio">{t.resumeLead}</p>
+  {
+    owner.cv && (
+      <p>
+        <a class="btn primary" href={owner.cv}>
+          {t.cv}
+        </a>
+      </p>
+    )
+  }
+  <div class="prose">
+    <h2>{t.place} · {t.stack} · {t.openToWork}</h2>
+    <p class="editorial">{t.proposition}</p>
+    <h2>{t.systems}</h2>
+    <ul>
+      {
+        workSystems.map((s) => (
+          <li>
+            <strong>{s.code}</strong> {s.titles[locale]} ({s.year}) — {s.leads[locale]}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <HireActions locale={locale} />
+</main>

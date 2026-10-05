@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro";
+import LabPage from "../components/LabPage.astro";
+import { owner } from "../config";
+import { copy } from "../copy";
+
+const t = copy.pt;
+---
+
+<Base locale="pt" title={`${t.labTitle} · ${owner.lab}`} description={t.labLead}>
+  <LabPage locale="pt" />
+</Base>
