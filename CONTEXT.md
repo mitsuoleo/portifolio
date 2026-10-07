@@ -5,7 +5,7 @@ A public website that presents one person's work and story to people who might h
 ## Language
 
 **Portfolio**:
-The public website itself: pages, copy, and Systems a Visitor can open without an account. Shape: Index, Work, Profile, Lab, Contact, Resume, plus one page per System. This repository holds only the Portfolio, not Evidence Repos. It is a static Astro site intended for Cloudflare Pages. The anchor System must link to a public, cloneable Evidence Repo before the Portfolio goes live.
+The public website itself: pages, copy, and Systems a Visitor can open without an account. Shape: Index, Work, Profile, Contact, Resume, plus one page per System. This repository holds only the Portfolio, not Evidence Repos. It is a static Astro site intended for Cloudflare Pages. The anchor System must link to a public, cloneable Evidence Repo before the Portfolio goes live.
 _Avoid_: Resume as the Surface, personal brand, landing page, web app
 
 **Owner**:
@@ -17,7 +17,7 @@ Anyone who opens the Portfolio.
 _Avoid_: User, customer, client
 
 **Recruiter**:
-A Visitor whose job is screening people, often in seconds, and who may not evaluate the work technically. Index must make the role obvious in under ten seconds. Their hire path is Contact, GitHub, and CV — never hidden behind the Command Center.
+A Visitor whose job is screening people, often in seconds, and who may not evaluate the work technically. Index must make the role obvious in under ten seconds. Their hire path is Contact, GitHub, and CV through visible links.
 _Avoid_: HR, talent, non-technical user
 
 **Technical Reviewer**:
@@ -33,19 +33,23 @@ The first screen: name, Backend Engineer, value proposition, the 3D core (with a
 _Avoid_: Hero as a greeting, Surface (retired term)
 
 **Look**:
-Scientific Minimal on an off-white field (`#F4F4EE`), ink (`#111315`), cobalt (`#2457F5`). Syne for display, IBM Plex Mono for system codes, Source Serif 4 for editorial lines. IBM Plex Sans for chrome. Aqua and glass only on the core artifact and rare highlights. Y2K shows up as codes, thin panels, and chrome-scale detail — not as nostalgia.
-_Avoid_: Night navy instrument board, cream Apple clone, neon terminal, generic glassmorphism
+A restrained dark interface (`#101010`) with light text, soft green light around the Index hero, and occasional violet technical accents. Montserrat carries the main text. Cards leave room for complete sentences and the project index does not show system numbers.
+_Avoid_: Hard hero box, flashing status lights, repeated terminal text, crowded pill cards
 
 **Open to Work**:
 An explicit statement on Index that the Owner is available to be hired.
 _Avoid_: Badge, status, looking for opportunities
 
 **System**:
-The unit of proof. A documented computational system with a code (`SYS/001`), title, lead, year, status, domain, duties, and technologies mapped to the job they did. The full editorial study (nine sections) at launch is Observa. Other Systems may appear in Work or Lab without that study.
+The unit of proof. A documented computational system with a title, lead, year, status, domain, duties, and technologies mapped to the job they did. The full editorial study (nine sections) remains Observa. Other Systems may appear in Work without that study.
 _Avoid_: Project, portfolio piece, work sample, repo, tutorial, Case Study (retired term)
 
+**Mercado One**:
+The first and featured System: an in-progress ERP for small grocery stores. Its public repository contains a Java/Spring Boot API, Angular web admin, and JavaFX desktop POS that stores sales in SQLite before synchronizing. The MVP is not complete.
+_Avoid_: Finished retail product, production-ready ERP
+
 **Observa**:
-The anchor System (`SYS/001`): a local laboratory for diagnosing and recovering a distributed order journey. Python and Node.js services exchange Kafka events, persist effects in PostgreSQL, and correlate metrics, traces, and logs in Grafana. Its public Evidence Repo documents synthetic scenarios, reproducible commands, observed results, and limits. OrderFlow remains a read-only contract reference.
+The full-study System: a local laboratory for diagnosing and recovering a distributed order journey. Python and Node.js services exchange Kafka events, persist effects in PostgreSQL, and correlate metrics, traces, and logs in Grafana. Its public Evidence Repo documents synthetic scenarios, reproducible commands, observed results, and limits. OrderFlow remains a read-only contract reference.
 _Avoid_: production payment platform, high-availability claim, Commerce Intelligence
 
 **Order Pipeline**:
@@ -55,14 +59,6 @@ _Avoid_: OrderFlow (repo name as product language)
 **Link Shortener**:
 A secondary System: short links and asynchronous click capture. Redis serves warm redirects; a cache miss reads PostgreSQL. Evidence Repo is Go. UI in that repo is not the exhibit.
 _Avoid_: URLshortner
-
-**Lab**:
-Notes, prototypes, and smaller Systems (for example PromptVault). Must not hide Index or Work.
-_Avoid_: Blog, playground as the product
-
-**Command Center**:
-Keyboard command palette (`Ctrl/Cmd+K`, `/`). Power feature. Every essential path also exists as visible navigation.
-_Avoid_: Terminal as the only UI
 
 **Evidence Repo**:
 A public Git repository under the Owner's user account, or under an organization that is not an Employer. Employer-org repos do not qualify, even when public. Evidence Repos are not this Portfolio's repository.

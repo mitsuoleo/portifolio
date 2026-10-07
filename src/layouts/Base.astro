@@ -4,7 +4,6 @@ import { locales, owner, pagePath } from "../config";
 import { copy } from "../copy";
 import { navItems } from "../content/systems";
 import { switchPath } from "../switch-path";
-import CommandCenter from "../components/CommandCenter.astro";
 import Live from "../components/Live.astro";
 import "@fontsource-variable/montserrat";
 import "../styles/global.css";
@@ -57,7 +56,6 @@ const nav = navItems(locale);
             );
           })
         }
-        <CommandCenter locale={locale} />
         <a class="lang" href={otherHref} hreflang={locales[loc.switchTo].html} aria-label={t.langAria}>
           {loc.switchLabel}
         </a>

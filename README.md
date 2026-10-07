@@ -2,7 +2,7 @@
 
 Site estático (Astro) de [Leonardo Mitsuo Fukuda](https://github.com/mitsuoleo). Português é o padrão; inglês vive em `/en`. Glossário em [`CONTEXT.md`](./CONTEXT.md). Decisões em [`docs/adr`](./docs/adr).
 
-O sistema principal agora é o [Observa](https://github.com/mitsuoleo/observa), com repositório público e clonável. Esta substituição das páginas planejadas de Commerce Intelligence e Catálogo está registrada na [ADR 0021](./docs/adr/0021-observa-is-anchor.md). Este repo contém somente o site.
+O projeto principal é o [Mercado One](https://github.com/Fatech-Ypiranga/Mercado-One-Java), um sistema para pequenos mercados ainda em desenvolvimento. O [Observa](https://github.com/mitsuoleo/observa) mantém o estudo técnico completo. A mudança de prioridade está registrada na [ADR 0022](./docs/adr/0022-mercado-one-leads-the-portfolio.md). Este repo contém somente o site.
 
 ## Local
 
@@ -15,7 +15,7 @@ npm run dev
 - Work: http://localhost:4321/trabalhos
 - Inglês: http://localhost:4321/en/
 
-`Ctrl/Cmd+K` abre o Command Center. O conteúdo essencial também está na navegação visível.
+A navegação principal leva diretamente a Home, Work e Profile, com troca entre português e inglês.
 
 ## Testes
 

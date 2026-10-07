@@ -1,7 +1,7 @@
 ---
 import type { Locale } from "../config";
 import { copy } from "../copy";
-import { anchor, recentExperiment } from "../content/systems";
+import { anchor } from "../content/systems";
 
 const { locale } = Astro.props as { locale: Locale };
 const t = copy[locale];
@@ -12,10 +12,6 @@ const t = copy[locale];
   <div>
     <p class="section-label">{t.building}</p>
     <p>{anchor.titles[locale]}</p>
-  </div>
-  <div>
-    <p class="section-label">{t.experiment}</p>
-    <p>{recentExperiment.titles[locale]}</p>
   </div>
   <div>
     <p class="section-label">{t.availability}</p>

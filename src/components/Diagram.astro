@@ -1,8 +1,27 @@
 ---
-type Kind = "observa" | "pipeline" | "shortener" | "promptvault";
+type Kind = "mercadoone" | "observa" | "pipeline" | "shortener" | "promptvault";
 const { kind } = Astro.props as { kind: Kind };
 ---
 
+{
+  kind === "mercadoone" && (
+    <svg class="diagram" viewBox="0 0 420 190" fill="none" aria-hidden="true">
+      <rect x="8" y="14" width="104" height="48" rx="8" stroke="currentColor" />
+      <text x="60" y="43" text-anchor="middle" fill="currentColor" font-size="11">ADMIN WEB</text>
+      <rect x="156" y="14" width="108" height="48" rx="8" stroke="currentColor" />
+      <text x="210" y="43" text-anchor="middle" fill="currentColor" font-size="11">API JAVA</text>
+      <rect x="308" y="14" width="104" height="48" rx="8" stroke="currentColor" />
+      <text x="360" y="43" text-anchor="middle" fill="currentColor" font-size="11">POSTGRESQL</text>
+      <path d="M112 38h44M264 38h44" stroke="currentColor" />
+      <rect x="8" y="126" width="104" height="48" rx="8" stroke="currentColor" />
+      <text x="60" y="155" text-anchor="middle" fill="currentColor" font-size="11">PDV</text>
+      <rect x="156" y="126" width="108" height="48" rx="8" stroke="currentColor" />
+      <text x="210" y="155" text-anchor="middle" fill="currentColor" font-size="11">SQLITE</text>
+      <path d="M112 150h44M210 126V62" stroke="currentColor" stroke-dasharray="4 4" />
+      <text x="224" y="100" fill="currentColor" font-size="10">sync</text>
+    </svg>
+  )
+}
 {
   kind === "observa" && (
     <svg class="diagram" viewBox="0 0 420 160" fill="none" role="img" aria-label="Order, Kafka, Payment, Inventory, OpenTelemetry e Grafana">

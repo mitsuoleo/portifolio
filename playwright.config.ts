@@ -4,11 +4,11 @@ export default defineConfig({
   testDir: "tests",
   fullyParallel: true,
   use: {
-    baseURL: "http://127.0.0.1:4333",
+    baseURL: "http://127.0.0.1:5087",
   },
   webServer: {
-    command: "npm run dev -- --host 127.0.0.1 --port 4333",
-    url: "http://127.0.0.1:4333",
+    command: "npm run dev -- --host 127.0.0.1 --port 5087",
+    url: "http://127.0.0.1:5087",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },

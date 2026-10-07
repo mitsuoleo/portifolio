@@ -11,20 +11,34 @@ import SystemRow from "./SystemRow.astro";
 const { locale } = Astro.props as { locale: Locale };
 const t = copy[locale];
 const roleParts = t.role.split(" ");
-const stack = ["Python", "PostgreSQL", "Kafka", "OpenTelemetry", "Docker", "Go", "Redis"];
-const rain =
-  locale === "pt"
-    ? "ORDER → KAFKA → PAYMENT → INVENTORY   correlation_id = order_id   W3C trace context   outbox   Grafana → Tempo → Loki   CONFIRMED · FAILED · CANCELLED   recuperação local"
-    : "ORDER → KAFKA → PAYMENT → INVENTORY   correlation_id = order_id   W3C trace context   outbox   Grafana → Tempo → Loki   CONFIRMED · FAILED · CANCELLED   local recovery";
-const rainBlock = Array.from({ length: 12 }, () => rain).join("\n");
+const stack = ["Python", "Java", "TypeScript", "JavaScript", "PostgreSQL", "SQLite", "Kafka", "Docker", "Go", "Redis", "OpenTelemetry"];
+const notes = locale === "pt"
+  ? [
+      "Mercado One / produto → estoque → venda",
+      "PDV / SQLite local → sincronização",
+      "API Java / Spring Boot + PostgreSQL",
+      "Admin web / catálogo e relatórios",
+      "Observa / eventos Kafka entre serviços",
+      "Observa / traces, métricas e logs",
+      "Pipeline / pagamento → estoque",
+      "Encurtador / Redis → PostgreSQL → 302",
+    ]
+  : [
+      "Mercado One / product → inventory → sale",
+      "POS / local SQLite → sync",
+      "Java API / Spring Boot + PostgreSQL",
+      "Web admin / catalog and reports",
+      "Observa / Kafka events across services",
+      "Observa / traces, metrics, and logs",
+      "Pipeline / payment → inventory",
+      "Shortener / Redis → PostgreSQL → 302",
+    ];
 ---
 
 <main id="content" class="shell">
   <section class="hero" data-glow>
     <div class="hero-text">
-      <ul class="kicker enter">
-        <li>{t.hi} {owner.name}</li>
-      </ul>
+      <p class="kicker enter">{t.hi} <strong>{owner.name}</strong></p>
       <h1 class="enter delay-1">
         {roleParts[0]}
         <br />
@@ -53,15 +67,15 @@ const rainBlock = Array.from({ length: 12 }, () => rain).join("\n");
     <div class="areas">
       {
         t.areas.map((a) => (
-          <details class="area">
-            <summary>{a.title}</summary>
+          <article class="area">
+            <h3>{a.title}</h3>
             <p>{a.body}</p>
-          </details>
+          </article>
         ))
       }
     </div>
     <div class="code-rain" aria-hidden="true">
-      <pre>{rainBlock}{"\n"}{rainBlock}</pre>
+      <ul>{notes.map((note) => <li>{note}</li>)}</ul>
     </div>
   </div>
 
@@ -69,7 +83,7 @@ const rainBlock = Array.from({ length: 12 }, () => rain).join("\n");
     <p class="section-label">{t.workEyebrow}</p>
     <h2>{t.systems}</h2>
   </div>
-  <div class="systems" data-reveal>
+  <div class="systems home-systems" data-reveal>
     {featuredSystems.map((s) => <SystemRow system={s} locale={locale} />)}
   </div>
 

@@ -17,6 +17,7 @@ export type Tech = {
 };
 
 export type SystemId =
+  | "mercadoone"
   | "observa"
   | "pipeline"
   | "shortener"
@@ -24,7 +25,6 @@ export type SystemId =
 
 export type System = {
   id: SystemId;
-  code: string;
   year: number;
   status: SystemStatus;
   domain: Domain;
@@ -43,8 +43,37 @@ export type System = {
 
 export const systems: System[] = [
   {
+    id: "mercadoone",
+    year: 2026,
+    status: "active",
+    domain: "Backend",
+    featured: true,
+    fullStudy: false,
+    lab: false,
+    repo: "https://github.com/Fatech-Ypiranga/Mercado-One-Java",
+    demo: "",
+    docs: "https://github.com/Fatech-Ypiranga/Mercado-One-Java/blob/main/docs/estado-atual.md",
+    stack: [
+      { name: "Java", role: { pt: "API e PDV desktop", en: "API and desktop POS" } },
+      { name: "Spring Boot", role: { pt: "API e regras do servidor", en: "API and server rules" } },
+      { name: "PostgreSQL", role: { pt: "dados centrais", en: "central data" } },
+      { name: "Angular", role: { pt: "administrativo web", en: "web admin" } },
+      { name: "JavaFX", role: { pt: "interface do PDV", en: "POS interface" } },
+      { name: "SQLite", role: { pt: "vendas e catálogo locais", en: "local sales and catalog" } },
+    ],
+    slugs: { pt: "mercado-one", en: "mercado-one" },
+    titles: { pt: "Mercado One", en: "Mercado One" },
+    leads: {
+      pt: "Sistema para pequenos mercados em desenvolvimento, com administrativo web, API Java e PDV desktop que guarda vendas localmente antes de sincronizar.",
+      en: "A system in development for small grocery stores, with a web admin, Java API, and desktop POS that stores sales locally before syncing.",
+    },
+    duties: {
+      pt: ["Cadastros, estoque simples e relatórios no administrativo", "Vendas registradas no SQLite do PDV antes da sincronização", "Conflitos de sincronização tratados no servidor"],
+      en: ["Catalog, basic inventory, and reports in the web admin", "Sales stored in the POS SQLite database before syncing", "Sync conflicts handled on the server"],
+    },
+  },
+  {
     id: "observa",
-    code: "SYS/001",
     year: 2026,
     status: "active",
     domain: "Systems Design",
@@ -85,7 +114,6 @@ export const systems: System[] = [
   },
   {
     id: "pipeline",
-    code: "SYS/003",
     year: 2025,
     status: "active",
     domain: "Systems Design",
@@ -114,11 +142,10 @@ export const systems: System[] = [
   },
   {
     id: "shortener",
-    code: "SYS/004",
     year: 2025,
     status: "archived",
     domain: "Backend",
-    featured: false,
+    featured: true,
     fullStudy: false,
     lab: false,
     repo: "https://github.com/mitsuoleo/encurta",
@@ -142,7 +169,6 @@ export const systems: System[] = [
   },
   {
     id: "promptvault",
-    code: "SYS/LAB/01",
     year: 2026,
     status: "lab",
     domain: "Developer Tools",
@@ -171,7 +197,7 @@ export const systems: System[] = [
 export const featuredSystems = systems.filter((s) => s.featured);
 export const workSystems = systems.filter((s) => !s.lab);
 export const labSystems = systems.filter((s) => s.lab);
-export const anchor = systems.find((s) => s.id === "observa")!;
+export const anchor = systems.find((s) => s.id === "mercadoone")!;
 export const recentExperiment = systems.find((s) => s.id === "promptvault")!;
 
 export function systemBySlug(slug: string, locale: Locale) {
@@ -187,7 +213,6 @@ export function navItems(locale: Locale) {
     { key: "home" as const, href: pagePath("home", locale) },
     { key: "work" as const, href: pagePath("work", locale) },
     { key: "profile" as const, href: pagePath("profile", locale) },
-    { key: "lab" as const, href: pagePath("lab", locale) },
   ];
 }
 

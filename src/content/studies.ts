@@ -168,6 +168,10 @@ export const studies: Partial<Record<SystemId, Record<Locale, FullStudy>>> = {
 };
 
 export const shorts: Partial<Record<SystemId, Record<Locale, string>>> = {
+  mercadoone: {
+    pt: "O Mercado One reúne uma API em Java/Spring Boot, um administrativo Angular e um PDV desktop em JavaFX. O PDV grava vendas no SQLite antes de enviá-las à API; o servidor registra o resultado da sincronização e os conflitos. Cadastros, estoque simples e relatórios já têm implementação inicial. O MVP ainda está em desenvolvimento.",
+    en: "Mercado One combines a Java/Spring Boot API, an Angular web admin, and a JavaFX desktop POS. The POS stores sales in SQLite before sending them to the API; the server records sync results and conflicts. Catalog, basic inventory, and reports have initial implementations. The MVP is still in development.",
+  },
   pipeline: {
     pt: "Pedido de e-commerce por coreografia. POST 202; correlation_id é o order_id. Python lidera; NestJS é evidência de apoio. Compensação quando o estoque falta depois do pagamento. Evidence repo: order-flow.",
     en: "E-commerce order by choreography. POST 202; correlation_id is order_id. Python leads; NestJS is supporting evidence. Compensation when stock fails after payment. Evidence repo: order-flow.",
