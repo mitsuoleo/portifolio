@@ -21,17 +21,4 @@
 
   }
 
-  const glow = document.querySelector("[data-glow]");
-  if (glow instanceof HTMLElement && !reduce && window.matchMedia("(pointer: fine)").matches) {
-    glow.addEventListener("pointermove", (event) => {
-      const box = glow.getBoundingClientRect();
-      const x = event.clientX - box.left;
-      const y = event.clientY - box.top;
-      const edgeDistance = Math.min(x, y, box.width - x, box.height - y);
-      glow.style.setProperty("--mx", `${x}px`);
-      glow.style.setProperty("--my", `${y}px`);
-      glow.style.setProperty("--glow-opacity", `${Math.min(1, Math.max(0, edgeDistance / 72))}`);
-    }, { passive: true });
-    glow.addEventListener("pointerleave", () => glow.style.setProperty("--glow-opacity", "0"));
-  }
 </script>

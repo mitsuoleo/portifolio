@@ -5,6 +5,7 @@ import { copy } from "../copy";
 import { studies, shorts } from "../content/studies";
 import type { System } from "../content/systems";
 import Diagram from "./Diagram.astro";
+import { techCategory } from "../tech-category";
 
 type Props = { system: System; locale: Locale };
 
@@ -22,7 +23,7 @@ const keys = ["context", "role", "architecture", "data", "decisions", "implement
   <p class="lead-display">{system.leads[locale]}</p>
   <div class="meta">
     <span>{t.domains[system.domain]}</span>
-    {system.stack.map((s) => <span>{s.name}</span>)}
+    {system.stack.map((s) => <span class="tech-tag" data-category={techCategory(s.name)}>{s.name}</span>)}
     {
       system.repo ? (
         <a href={system.repo}>{t.evidence}</a>
@@ -69,10 +70,6 @@ const keys = ["context", "role", "architecture", "data", "decisions", "implement
     ) : (
       <div class="prose">
         <p>{short}</p>
-        <p>{t.shortStudy}</p>
-        <p>
-          <a href={pagePath("work", locale)}>{t.workTitle}</a>
-        </p>
       </div>
     )
   }

@@ -64,8 +64,8 @@ export const systems: System[] = [
     slugs: { pt: "mercado-one", en: "mercado-one" },
     titles: { pt: "Mercado One", en: "Mercado One" },
     leads: {
-      pt: "Sistema para pequenos mercados em desenvolvimento, com administrativo web, API Java e PDV desktop que guarda vendas localmente antes de sincronizar.",
-      en: "A system in development for small grocery stores, with a web admin, Java API, and desktop POS that stores sales locally before syncing.",
+      pt: "Sistema para pequenos mercados em desenvolvimento: administrativo Angular, API Java com Spring Boot e PostgreSQL, e PDV JavaFX que registra vendas no SQLite antes de sincronizar",
+      en: "A system in development for small grocery stores: Angular admin, Java API with Spring Boot and PostgreSQL, and a JavaFX POS that records sales in SQLite before syncing",
     },
     duties: {
       pt: ["Cadastros, estoque simples e relatórios no administrativo", "Vendas registradas no SQLite do PDV antes da sincronização", "Conflitos de sincronização tratados no servidor"],
@@ -94,8 +94,8 @@ export const systems: System[] = [
     slugs: { pt: "observa", en: "observa" },
     titles: { pt: "Observa", en: "Observa" },
     leads: {
-      pt: "Laboratório local de pedidos distribuídos para demonstrar diagnóstico, compensação e recuperação com observabilidade de ponta a ponta.",
-      en: "A local distributed-order lab demonstrating diagnosis, compensation, and recovery with end-to-end observability.",
+      pt: "Laboratório local de pedidos: serviços Python e Node.js trocam eventos Kafka, persistem efeitos no PostgreSQL e correlacionam traces, métricas e logs no Grafana para diagnóstico e recuperação",
+      en: "A local order lab: Python and Node.js services exchange Kafka events, persist effects in PostgreSQL, and correlate traces, metrics, and logs in Grafana for diagnosis and recovery",
     },
     duties: {
       pt: [
@@ -132,8 +132,8 @@ export const systems: System[] = [
     slugs: { pt: "pipeline-de-pedidos", en: "order-pipeline" },
     titles: { pt: "Pipeline de pedidos", en: "Order pipeline" },
     leads: {
-      pt: "Um pedido de e-commerce por coreografia de eventos. Nenhum serviço de domínio chama o outro via HTTP.",
-      en: "An e-commerce order through event choreography. No domain service calls another over HTTP.",
+      pt: "Fluxo de pedidos de e-commerce com FastAPI, NestJS e RabbitMQ: pagamento e estoque avançam por eventos, com compensação quando falta estoque e sem chamadas HTTP entre serviços de domínio",
+      en: "An e-commerce order flow with FastAPI, NestJS, and RabbitMQ: payment and inventory progress through events, with compensation when stock is unavailable and no HTTP calls between domain services",
     },
     duties: {
       pt: ["Coreografia no broker", "Compensação quando o estoque falta", "Contrato 202 na criação"],
@@ -159,8 +159,8 @@ export const systems: System[] = [
     slugs: { pt: "encurtador", en: "link-shortener" },
     titles: { pt: "Encurtador", en: "Link shortener" },
     leads: {
-      pt: "O clique consulta Redis, recorre ao PostgreSQL em cache miss e devolve 302. Analytics segue em stream.",
-      en: "A click checks Redis, falls back to PostgreSQL on a cache miss, and returns 302. Analytics follows on a stream.",
+      pt: "Encurtador em Go: consulta o link no Redis, busca no PostgreSQL quando não há cache e retorna HTTP 302, com captura assíncrona de cliques em stream",
+      en: "A Go link shortener: looks up links in Redis, falls back to PostgreSQL on a cache miss, and returns HTTP 302, with asynchronous click capture on a stream",
     },
     duties: {
       pt: ["Lookup Redis com fallback PostgreSQL", "Stream de cliques", "Identidade do link curto"],
@@ -184,8 +184,8 @@ export const systems: System[] = [
     slugs: { pt: "promptvault", en: "promptvault" },
     titles: { pt: "PromptVault", en: "PromptVault" },
     leads: {
-      pt: "Arquivo versionado de prompts: diff, autor e contrato de entrada. Experimento de ferramenta interna.",
-      en: "A versioned prompt archive: diff, author, and input contract. An internal-tool experiment.",
+      pt: "Experimento de ferramenta interna em Python para versionar prompts com diff, autor e contrato de entrada",
+      en: "An internal-tool experiment in Python for versioning prompts with diffs, authors, and input contracts",
     },
     duties: {
       pt: ["Modelo de versão", "Nota de laboratório"],

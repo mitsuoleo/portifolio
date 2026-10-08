@@ -3,6 +3,7 @@ import type { Locale } from "../config";
 import type { System } from "../content/systems";
 import { copy } from "../copy";
 import { systemHref } from "../content/systems";
+import { techCategory } from "../tech-category";
 
 type Props = { system: System; locale: Locale };
 
@@ -30,7 +31,7 @@ const mark = system.id === "mercadoone" ? "M1" : system.titles[locale].slice(0, 
       <h3 class="system-title">{system.titles[locale]}</h3>
       <p class="system-description">{system.leads[locale]}</p>
       <ul class="system-tech" aria-label={t.stack}>
-        {system.stack.slice(0, 3).map((tech) => <li>{tech.name}</li>)}
+        {system.stack.map((tech) => <li class="tech-tag" data-category={techCategory(tech.name)}>{tech.name}</li>)}
       </ul>
     </div>
     <div class="icon-btns" aria-hidden="true">

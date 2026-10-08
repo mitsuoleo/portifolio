@@ -8,8 +8,8 @@ test("index leads with Mercado One and keeps the other projects", async ({ page 
   await expect(page.locator(".status-block")).toContainText("Mercado One");
   await expect(page.getByRole("link", { name: /Observa/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /Encurtador/ })).toBeVisible();
-  await expect(page.locator(".code-rain li")).toHaveCount(8);
-  const lines = await page.locator(".code-rain li").allTextContents();
+  await expect(page.locator(".code-rain ul").first().locator("li")).toHaveCount(8);
+  const lines = await page.locator(".code-rain ul").first().locator("li").allTextContents();
   expect(new Set(lines).size).toBe(lines.length);
   for (const technology of ["Java", "TypeScript", "JavaScript", "SQLite"]) {
     await expect(page.locator(".marquee .tags").first().getByText(technology, { exact: true })).toBeVisible();
@@ -80,22 +80,68 @@ test("navigation has no Lab or command palette", async ({ page }) => {
   expect((await page.request.get("/trabalhos/promptvault")).status()).toBe(404);
 });
 
-test("hero light is subtle and resets when the pointer leaves", async ({ page }) => {
+test("hero has no pointer light", async ({ page }) => {
   await page.goto("/");
-  const hero = page.locator("[data-glow]");
-  const box = await hero.boundingBox();
-  expect(box).not.toBeNull();
-  if (!box) return;
+  await expect(page.locator("[data-glow]")).toHaveCount(0);
+  const hero = page.locator(".hero");
+  await hero.hover();
+  expect(await hero.evaluate(el => getComputedStyle(el, "::after").content)).toBe("none");
+});
 
-  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-  await expect(hero).toHaveCSS("--glow-opacity", "1");
-  await expect(hero).toHaveCSS("border-top-width", "0px");
-  await expect(hero).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-  await page.mouse.move(box.x + 2, box.y + box.height / 2);
-  const edgeOpacity = Number(await hero.evaluate((element) => element.style.getPropertyValue("--glow-opacity")));
-  expect(edgeOpacity).toBeLessThan(0.1);
-  await page.mouse.move(0, 0);
-  await expect(hero).toHaveCSS("--glow-opacity", "0");
+test("terminal scrolls continuously and respects reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const track = page.locator(".code-rain-track");
+  const original = track.locator("ul").first();
+  const duplicate = track.locator('ul[aria-hidden="true"]');
+  expect(await duplicate.locator("li").allTextContents()).toEqual(await original.locator("li").allTextContents());
+  await expect(track).toHaveCSS("animation-duration", "24s");
+  const y = () => track.evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m42);
+  const before = await y();
+  await expect.poll(y).toBeLessThan(before - 1);
+  const dimensions = () => page.locator(".code-rain").evaluate(el => ({
+    height: el.clientHeight,
+    row: el.querySelector("li")!.getBoundingClientRect().height,
+  }));
+  let size = await dimensions();
+  expect(size.height).toBeCloseTo(size.row * 8, 0);
+  await page.setViewportSize({ width: 390, height: 844 });
+  size = await dimensions();
+  expect(size.height).toBeCloseTo(size.row * 4, 0);
+  await expect(original.locator("li")).toHaveCount(8);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(track).toHaveCSS("animation-name", "none");
+  await expect(track).toHaveCSS("transform", "none");
+  await expect(duplicate).toBeHidden();
+  for (const row of await original.locator("li").all()) await expect(row).toBeVisible();
+});
+
+test("Portuguese labels, concrete descriptions, and readable technology tags", async ({ page }) => {
+  for (const path of ["/", "/en/"]) {
+    await page.goto(path);
+    const descriptions = await page.locator(".lead-display, .area p, .system-description").allTextContents();
+    for (const description of descriptions) expect(description.trim()).not.toMatch(/\.$/);
+    for (const card of await page.locator(".home-systems .system-row").all()) {
+      const technologies = (await card.getAttribute("data-tech"))!.split(",");
+      expect(await card.locator(".system-tech li").allTextContents()).toEqual(technologies);
+    }
+    const sizes = await page.locator(".tech-tag").evaluateAll(elements => elements.map(el => ({
+      size: parseFloat(getComputedStyle(el).fontSize), weight: getComputedStyle(el).fontWeight,
+    })));
+    expect(sizes.every(tag => tag.size >= 14 && Number(tag.weight) >= 600)).toBe(true);
+    await expect(page.locator(".status-head")).toHaveCSS("font-weight", "600");
+  }
+  await page.goto("/");
+  await expect(page.locator(".nav").getByRole("link", { name: "Trabalhos", exact: true })).toBeVisible();
+  await expect(page.locator(".nav").getByRole("link", { name: "Perfil", exact: true })).toBeVisible();
+  for (const path of ["/trabalhos/mercado-one", "/trabalhos/pipeline-de-pedidos", "/trabalhos/encurtador", "/en/work/mercado-one"]) {
+    await page.goto(path);
+    await expect(page.getByText(/Observa (tem um estudo|has a longer)/)).toHaveCount(0);
+    await expect(page.getByRole("link", { name: /Índice de sistemas|System index/ })).toHaveCount(0);
+    await expect(page.locator(".back")).toBeVisible();
+    expect((await page.locator(".lead-display").textContent())!.trim()).not.toMatch(/\.$/);
+    await expect(page.locator(".meta .tech-tag").first()).toBeVisible();
+  }
 });
 
 test("home fits a narrow screen", async ({ page }) => {

@@ -7,6 +7,7 @@ import HireActions from "./HireActions.astro";
 import SocialIcons from "./SocialIcons.astro";
 import StatusBlock from "./StatusBlock.astro";
 import SystemRow from "./SystemRow.astro";
+import { techCategory } from "../tech-category";
 
 const { locale } = Astro.props as { locale: Locale };
 const t = copy[locale];
@@ -36,7 +37,7 @@ const notes = locale === "pt"
 ---
 
 <main id="content" class="shell">
-  <section class="hero" data-glow>
+  <section class="hero">
     <div class="hero-text">
       <p class="kicker enter">{t.hi} <strong>{owner.name}</strong></p>
       <h1 class="enter delay-1">
@@ -52,10 +53,10 @@ const notes = locale === "pt"
   <div class="marquee" aria-label={t.stack}>
     <div class="marquee-track">
       <ul class="tags">
-        {stack.map((name) => <li>{name}</li>)}
+        {stack.map((name) => <li class="tech-tag" data-category={techCategory(name)}>{name}</li>)}
       </ul>
       <ul class="tags" aria-hidden="true">
-        {stack.map((name) => <li>{name}</li>)}
+        {stack.map((name) => <li class="tech-tag" data-category={techCategory(name)}>{name}</li>)}
       </ul>
     </div>
   </div>
@@ -75,7 +76,10 @@ const notes = locale === "pt"
       }
     </div>
     <div class="code-rain" aria-hidden="true">
-      <ul>{notes.map((note) => <li>{note}</li>)}</ul>
+      <div class="code-rain-track">
+        <ul>{notes.map((note) => <li>{note}</li>)}</ul>
+        <ul aria-hidden="true">{notes.map((note) => <li>{note}</li>)}</ul>
+      </div>
     </div>
   </div>
 
