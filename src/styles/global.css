@@ -514,6 +514,7 @@ h2.display {
 .tech-tag[data-category="language"] { --tech-color: #c7a6ff; }
 .tech-tag[data-category="framework"] { --tech-color: #91ccff; }
 .tech-tag[data-category="data"] { --tech-color: #75e5a0; }
+.tech-tag[data-category="domain"] { --tech-color: #ffd69b; }
 
 .system-row:hover .system-title {
   transform: scale(1.03);

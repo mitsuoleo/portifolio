@@ -114,7 +114,7 @@ export const systems: System[] = [
   },
   {
     id: "pipeline",
-    year: 2025,
+    year: 2026,
     status: "active",
     domain: "Systems Design",
     featured: true,
@@ -142,7 +142,7 @@ export const systems: System[] = [
   },
   {
     id: "shortener",
-    year: 2025,
+    year: 2026,
     status: "archived",
     domain: "Backend",
     featured: true,
