@@ -12,6 +12,7 @@ const t = copy[locale];
 <main id="content" class="shell page">
   <h1>{t.resumeTitle}</h1>
   <p class="role">{owner.name} · {t.role}</p>
+  <p class="bio">{t.formation}</p>
   <p class="bio">{t.resumeLead}</p>
   {
     owner.cv && (
@@ -23,7 +24,7 @@ const t = copy[locale];
     )
   }
   <div class="prose">
-    <h2>{t.place} · {t.stack} · {t.openToWork}</h2>
+    <h2>{t.place} · {t.openToWork}</h2>
     <p class="editorial">{t.proposition}</p>
     <h2>{t.systems}</h2>
     <ul>

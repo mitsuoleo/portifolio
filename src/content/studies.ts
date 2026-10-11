@@ -168,7 +168,7 @@ export const studies: Partial<Record<SystemId, Record<Locale, FullStudy>>> = {
   mercadoone: {
     pt: {
       context: {
-        intro: "Mercado One é um ERP em desenvolvimento para pequenos mercados: cadastro, estoque simples, venda presencial e relatório operacional. O caixa precisa registrar a venda mesmo quando a API não responde. O repositório ainda é um scaffold executável, não um MVP fechado.",
+        intro: "Mercado One é um ERP em desenvolvimento para pequenos mercados: cadastro, estoque simples, venda presencial e relatório operacional. O caixa precisa registrar a venda mesmo quando a API não responde. O administrativo e a API estão num piloto público na Azure; o PDV é o cliente desktop, com guia de uso próprio. O repositório ainda registra o conjunto como scaffold, não como MVP fechado.",
         items: [
           "Três aplicações: administrativo Angular, API Spring Boot e PDV JavaFX.",
           "A venda do caixa nasce no SQLite e só depois segue para a API.",
@@ -188,7 +188,7 @@ export const studies: Partial<Record<SystemId, Record<Locale, FullStudy>>> = {
         items: [
           "O backend está em fatias: access, catalog, customer, inventory, sales, offline, supplier, audit e system.",
           "Na venda direta ao servidor, o preço é o vigente. No sync offline, divergência vira conflito.",
-          "A documentação descreve um piloto de hospedagem. Este estudo não o trata como produção.",
+          "O piloto Azure publica a API em App Service Linux com Java 25 e o PostgreSQL Flexible Server em Brazil South. O administrativo fica em Static Web Apps em Central US. O PDV permanece no caixa e aponta para essa API. O repositório descreve o grupo mercado-one-prod como piloto de assinatura de estudante, não como loja em produção.",
         ],
       },
       data: {
@@ -213,6 +213,7 @@ export const studies: Partial<Record<SystemId, Record<Locale, FullStudy>>> = {
           "Verificações separadas: mvn test na API e no PDV, npm test no admin.",
           "A documentação registra 33 métodos de teste na API, 56 specs no admin e 8 métodos no PDV.",
           "Essa contagem está no texto do repositório. A última atualização dessa página avisa que a suíte não foi reexecutada ali.",
+          "O piloto no ar responde em GET /api/system/info com a versão 0.1.0-SNAPSHOT. O guia de uso do PDV cobre busca, carrinho, um pagamento e o comprovante textual.",
         ],
       },
       product: {
@@ -224,7 +225,7 @@ export const studies: Partial<Record<SystemId, Record<Locale, FullStudy>>> = {
         ],
       },
       results: {
-        intro: "O que está demonstrável é o scaffold executável: cadastro, estoque simples, venda confirmada no servidor, fila offline e conflitos resolvíveis. Este estudo não publica medição de loja.",
+        intro: "O que está demonstrável é o piloto do administrativo e da API, junto com o PDV desktop: cadastro, estoque simples, venda confirmada no servidor, fila offline e conflitos resolvíveis. Este estudo não publica medição de loja.",
         items: [
           "O relatório de vendas filtra por período, operador, cliente e status, e oferece CSV e produtos mais vendidos.",
           "No login, o PDV reenvia vendas PENDING e ERROR. CONFLICT não entra nesse reenvio.",
@@ -236,13 +237,13 @@ export const studies: Partial<Record<SystemId, Record<Locale, FullStudy>>> = {
         items: [
           "O offline parcial não cadastra produto, não cancela venda e não emite documento fiscal.",
           "Módulos ainda se chamam por serviço e repositório. A fronteira desejada está documentada como alvo, não como o estado do código.",
-          "Uso em loja dependeria do restante do MVP e de um ambiente que não seja o de desenvolvimento.",
+          "Uso em loja dependeria do restante do MVP. O piloto Azure publica o administrativo e a API; não substitui essa loja.",
         ],
       },
     },
     en: {
       context: {
-        intro: "Mercado One is an in-progress ERP for small grocery stores: catalog, basic inventory, in-person sales, and operational reports. The POS has to record a sale even when the API does not answer. The repository is still an executable scaffold, not a finished MVP.",
+        intro: "Mercado One is an in-progress ERP for small grocery stores: catalog, basic inventory, in-person sales, and operational reports. The POS has to record a sale even when the API does not answer. The admin and API are on a public Azure pilot; the POS is the desktop client, with its own usage guide. The repository still records the whole as a scaffold, not a finished MVP.",
         items: [
           "Three applications: an Angular admin, a Spring Boot API, and a JavaFX POS.",
           "A POS sale starts in SQLite and only then goes to the API.",
@@ -262,7 +263,7 @@ export const studies: Partial<Record<SystemId, Record<Locale, FullStudy>>> = {
         items: [
           "The backend is split into access, catalog, customer, inventory, sales, offline, supplier, audit, and system.",
           "A sale posted straight to the server uses the current price. An offline sync that diverges becomes a conflict.",
-          "The docs describe a hosting pilot. This study does not treat that pilot as production.",
+          "The Azure pilot publishes the API on Linux App Service with Java 25 and PostgreSQL Flexible Server in Brazil South. The admin is on Static Web Apps in Central US. The POS stays on the register and points at that API. The repository describes the mercado-one-prod resource group as a student-subscription pilot, not as a store in production.",
         ],
       },
       data: {
@@ -287,6 +288,7 @@ export const studies: Partial<Record<SystemId, Record<Locale, FullStudy>>> = {
           "Checks are separate: mvn test for the API and the POS, npm test for the admin.",
           "The docs record 33 test methods in the API, 56 specs in the admin, and 8 test methods in the POS.",
           "That count lives in the repository text. The latest update of that page says the suite was not rerun there.",
+          "The live pilot answers GET /api/system/info with version 0.1.0-SNAPSHOT. The POS usage guide covers search, a cart, one payment, and the text receipt.",
         ],
       },
       product: {
@@ -298,7 +300,7 @@ export const studies: Partial<Record<SystemId, Record<Locale, FullStudy>>> = {
         ],
       },
       results: {
-        intro: "What can be demonstrated is the executable scaffold: catalog, basic inventory, a server-confirmed sale, an offline queue, and resolvable conflicts. This study publishes no in-store measurement.",
+        intro: "What can be demonstrated is the admin and API pilot, together with the desktop POS: catalog, basic inventory, a server-confirmed sale, an offline queue, and resolvable conflicts. This study publishes no in-store measurement.",
         items: [
           "The sales report filters by period, operator, customer, and status, and offers CSV plus top products.",
           "On login, the POS resends PENDING and ERROR sales. CONFLICT is left out of that resend.",
@@ -310,7 +312,7 @@ export const studies: Partial<Record<SystemId, Record<Locale, FullStudy>>> = {
         items: [
           "Partial offline mode does not register products, cancel sales, or issue a fiscal document.",
           "Modules still call each other through services and repositories. The intended boundary is documented as a target, not as the state of the code.",
-          "Store use would depend on the rest of the MVP and on an environment other than development.",
+          "Store use would depend on the rest of the MVP. The Azure pilot publishes the admin and the API; it does not stand in for that store.",
         ],
       },
     },

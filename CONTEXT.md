@@ -9,8 +9,8 @@ The public website itself: pages, copy, and Systems a Visitor can open without a
 _Avoid_: Resume as the Surface, personal brand, landing page, web app
 
 **Owner**:
-Leonardo Mitsuo Fukuda. The title this Portfolio sells is Backend Engineer. The claimed stack is Python and SQL. Index states they are Open to Work. The Bio names São Paulo, Brazil. Years of experience are not stated on Index.
-_Avoid_: User, candidate, me, full-stack engineer (not the title)
+Leonardo Mitsuo Fukuda. The title this Portfolio sells is Backend developer, for an internship or a junior role. The Owner is a student of Systems Analysis and Development at FATEC Ipiranga, in progress since February 2026. Index states that target level. The Bio names São Paulo, Brazil. A count of years of professional experience is not stated.
+_Avoid_: User, candidate, me, Backend Engineer, pleno, senior, full-stack engineer (not the title)
 
 **Visitor**:
 Anyone who opens the Portfolio.
@@ -29,7 +29,7 @@ The public identity of the site: a personal computational engineering archive. N
 _Avoid_: Dashboard template, cyberpunk terminal, Windows clone
 
 **Index**:
-The first screen: name, Backend Engineer, value proposition, the 3D core (with a static fallback), featured Systems, practice areas, System Status, a short editorial profile, and hire actions.
+The first screen: name, Backend developer, student status, the internship or junior target, value proposition, featured Systems, practice areas, System Status, a short editorial profile, and hire actions.
 _Avoid_: Hero as a greeting, Surface (retired term)
 
 **Look**:
@@ -37,16 +37,16 @@ A restrained dark interface (`#101010`) with light text, soft green light around
 _Avoid_: Hard hero box, flashing status lights, repeated terminal text, crowded pill cards
 
 **Open to Work**:
-An explicit statement on Index that the Owner is available to be hired.
-_Avoid_: Badge, status, looking for opportunities
+An explicit statement on Index that the Owner is available for an internship or a junior backend role.
+_Avoid_: Badge, status, generic availability with no level, pleno, senior
 
 **System**:
 The unit of proof. A documented computational system with a title, lead, year, status, domain, duties, and technologies mapped to the job they did. Every public System carries the same nine-section study. Observa is no longer the only one.
 _Avoid_: Project, portfolio piece, work sample, repo, tutorial, Case Study (retired term)
 
 **Mercado One**:
-The first and featured System: an in-progress ERP for small grocery stores. Its public repository contains a Java/Spring Boot API, Angular web admin, and JavaFX desktop POS that stores sales in SQLite before synchronizing. The MVP is not complete.
-_Avoid_: Finished retail product, production-ready ERP
+The first and featured System: an in-progress ERP for small grocery stores. Its public repository contains a Java/Spring Boot API, Angular web admin, and JavaFX desktop POS that stores sales in SQLite before synchronizing. The admin and API are a verified Azure pilot; the POS stays on the register and points at that API. The MVP is not complete.
+_Avoid_: Finished retail product, production-ready ERP, in-store deployment
 
 **Observa**:
 The full-study System: a local laboratory for diagnosing and recovering a distributed order journey. Python and Node.js services exchange Kafka events, persist effects in PostgreSQL, and correlate metrics, traces, and logs in Grafana. Its public Evidence Repo documents synthetic scenarios, reproducible commands, observed results, and limits. OrderFlow remains a read-only contract reference.

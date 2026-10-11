@@ -2,8 +2,11 @@ import { expect, test } from "@playwright/test";
 
 test("index leads with Mercado One and keeps the other projects", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Engenheiro");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Desenvolvedor");
   await expect(page.getByText(/Olá, eu sou Leonardo Mitsuo Fukuda/)).toBeVisible();
+  await expect(page.getByText(/FATEC Ipiranga/)).toBeVisible();
+  await expect(page.getByText(/estágio/i).first()).toBeVisible();
+  await expect(page.locator(".status-block")).toContainText("Estágio ou júnior");
   await expect(page.locator(".home-systems .system-row").first()).toContainText("Mercado One");
   await expect(page.locator(".status-block")).toContainText("Mercado One");
   await expect(page.getByRole("link", { name: /Observa/ })).toBeVisible();
@@ -32,10 +35,19 @@ test("Mercado One has short pages in both languages and a public repository link
     "href",
     "https://github.com/Fatech-Ypiranga/Mercado-One-Java",
   );
+  await expect(page.getByRole("link", { name: "Demonstração" })).toHaveAttribute(
+    "href",
+    "https://zealous-sand-0354e3510.6.azurestaticapps.net",
+  );
+  await expect(page.getByText(/piloto Azure/i).first()).toBeVisible();
   await page.getByRole("link", { name: "Versão em inglês" }).click();
   await expect(page).toHaveURL(/\/en\/work\/mercado-one/);
   await expect(page.getByRole("heading", { level: 1, name: "Mercado One" })).toBeVisible();
   await expect(page.getByText(/desktop POS|sync/i).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: "Demo" })).toHaveAttribute(
+    "href",
+    "https://zealous-sand-0354e3510.6.azurestaticapps.net",
+  );
 });
 
 test("project codes and pulsing text lights are absent", async ({ page }) => {
@@ -166,6 +178,8 @@ test("language switch keeps the system", async ({ page }) => {
 
 test("english nav reaches profile and contact", async ({ page }) => {
   await page.goto("/en/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Backend");
+  await expect(page.getByText(/internship/i).first()).toBeVisible();
   await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Profile" }).click();
   await expect(page).toHaveURL(/\/en\/profile/);
   await expect(page.locator("body")).not.toContainText("SYSTEMS LAB");
@@ -180,6 +194,8 @@ test("profile introduces the work without the lab label", async ({ page }) => {
   await expect(page.locator("#content")).not.toContainText("SYSTEMS LAB");
   await expect(page.getByRole("link", { name: "Mercado One" })).toHaveAttribute("href", "/trabalhos/mercado-one");
   await expect(page.getByRole("link", { name: "Observa" })).toBeVisible();
+  await expect(page.getByText(/FATEC Ipiranga/)).toBeVisible();
+  await expect(page.getByText(/júnior/i).first()).toBeVisible();
   await expect(page.getByRole("heading", { name: "Como trabalho" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "No código" })).toBeVisible();
 });

@@ -51,7 +51,7 @@ export const systems: System[] = [
     fullStudy: true,
     lab: false,
     repo: "https://github.com/Fatech-Ypiranga/Mercado-One-Java",
-    demo: "",
+    demo: "https://zealous-sand-0354e3510.6.azurestaticapps.net",
     docs: "https://github.com/Fatech-Ypiranga/Mercado-One-Java/blob/main/docs/estado-atual.md",
     stack: [
       { name: "Java", role: { pt: "API e PDV desktop", en: "API and desktop POS" } },
@@ -60,12 +60,13 @@ export const systems: System[] = [
       { name: "Angular", role: { pt: "administrativo web", en: "web admin" } },
       { name: "JavaFX", role: { pt: "interface do PDV", en: "POS interface" } },
       { name: "SQLite", role: { pt: "vendas e catálogo locais", en: "local sales and catalog" } },
+      { name: "Azure", role: { pt: "piloto do administrativo e da API", en: "admin and API pilot" } },
     ],
     slugs: { pt: "mercado-one", en: "mercado-one" },
     titles: { pt: "Mercado One", en: "Mercado One" },
     leads: {
-      pt: "Sistema para pequenos mercados em desenvolvimento: administrativo Angular, API Java com Spring Boot e PostgreSQL, e PDV JavaFX que registra vendas no SQLite antes de sincronizar",
-      en: "A system in development for small grocery stores: Angular admin, Java API with Spring Boot and PostgreSQL, and a JavaFX POS that records sales in SQLite before syncing",
+      pt: "Sistema para pequenos mercados em desenvolvimento: administrativo Angular e API Java num piloto Azure, PostgreSQL no servidor, e PDV JavaFX que registra vendas no SQLite antes de sincronizar",
+      en: "A system in development for small grocery stores: Angular admin and Java API on an Azure pilot, PostgreSQL on the server, and a JavaFX POS that records sales in SQLite before syncing",
     },
     duties: {
       pt: ["Cadastros, estoque simples e relatórios no administrativo", "Vendas registradas no SQLite do PDV antes da sincronização", "Conflitos de sincronização tratados no servidor"],
