@@ -2,7 +2,7 @@
 
 Site estático (Astro) de [Leonardo Mitsuo Fukuda](https://github.com/mitsuoleo). Português é o padrão; inglês vive em `/en`. Glossário em [`CONTEXT.md`](./CONTEXT.md). Decisões em [`docs/adr`](./docs/adr).
 
-O projeto principal é o [Mercado One](https://github.com/Fatech-Ypiranga/Mercado-One-Java), um sistema para pequenos mercados ainda em desenvolvimento. O [Observa](https://github.com/mitsuoleo/observa) mantém o estudo técnico completo. A mudança de prioridade está registrada na [ADR 0022](./docs/adr/0022-mercado-one-leads-the-portfolio.md). Este repo contém somente o site.
+O projeto principal é o [Mercado One](https://github.com/Fatech-Ypiranga/Mercado-One-Java), um sistema para pequenos mercados ainda em desenvolvimento. Os quatro sistemas públicos têm o mesmo estudo em nove seções. O [Observa](https://github.com/mitsuoleo/observa) é o laboratório de pedidos distribuídos. A mudança de prioridade está registrada na [ADR 0022](./docs/adr/0022-mercado-one-leads-the-portfolio.md). Este repo contém somente o site.
 
 ## Local
 

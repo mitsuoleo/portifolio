@@ -41,7 +41,7 @@ An explicit statement on Index that the Owner is available to be hired.
 _Avoid_: Badge, status, looking for opportunities
 
 **System**:
-The unit of proof. A documented computational system with a title, lead, year, status, domain, duties, and technologies mapped to the job they did. The full editorial study (nine sections) remains Observa. Other Systems may appear in Work without that study.
+The unit of proof. A documented computational system with a title, lead, year, status, domain, duties, and technologies mapped to the job they did. Every public System carries the same nine-section study. Observa is no longer the only one.
 _Avoid_: Project, portfolio piece, work sample, repo, tutorial, Case Study (retired term)
 
 **Mercado One**:

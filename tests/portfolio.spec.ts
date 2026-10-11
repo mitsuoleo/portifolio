@@ -134,8 +134,10 @@ test("Portuguese labels, concrete descriptions, and readable technology tags", a
   await page.goto("/");
   await expect(page.locator(".nav").getByRole("link", { name: "Trabalhos", exact: true })).toBeVisible();
   await expect(page.locator(".nav").getByRole("link", { name: "Perfil", exact: true })).toBeVisible();
-  for (const path of ["/trabalhos/mercado-one", "/trabalhos/pipeline-de-pedidos", "/trabalhos/encurtador", "/en/work/mercado-one"]) {
+  for (const path of ["/trabalhos/mercado-one", "/trabalhos/pipeline-de-pedidos", "/trabalhos/encurtador", "/en/work/mercado-one", "/en/work/order-pipeline", "/en/work/link-shortener"]) {
     await page.goto(path);
+    await expect(page.getByRole("heading", { name: /01 \/ (Contexto|Context)/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /09 \/ (Retrospectiva|Retrospective)/ })).toBeVisible();
     await expect(page.getByText(/Observa (tem um estudo|has a longer)/)).toHaveCount(0);
     await expect(page.getByRole("link", { name: /Índice de sistemas|System index/ })).toHaveCount(0);
     await expect(page.locator(".back")).toBeVisible();
@@ -166,8 +168,20 @@ test("english nav reaches profile and contact", async ({ page }) => {
   await page.goto("/en/");
   await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Profile" }).click();
   await expect(page).toHaveURL(/\/en\/profile/);
+  await expect(page.locator("body")).not.toContainText("SYSTEMS LAB");
+  await expect(page.getByRole("link", { name: "Mercado One" })).toBeVisible();
   await page.goto("/en/contact");
   await expect(page.getByRole("heading", { name: "Contact" })).toBeVisible();
+});
+
+test("profile introduces the work without the lab label", async ({ page }) => {
+  await page.goto("/perfil");
+  await expect(page.getByRole("heading", { level: 1, name: "Perfil" })).toBeVisible();
+  await expect(page.locator("#content")).not.toContainText("SYSTEMS LAB");
+  await expect(page.getByRole("link", { name: "Mercado One" })).toHaveAttribute("href", "/trabalhos/mercado-one");
+  await expect(page.getByRole("link", { name: "Observa" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Como trabalho" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "No código" })).toBeVisible();
 });
 
 test("contact pages offer email and LinkedIn in both languages", async ({ page }) => {

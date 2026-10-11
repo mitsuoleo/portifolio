@@ -1,54 +1,55 @@
 ---
 import type { Locale } from "../config";
-import { owner } from "../config";
 import { copy } from "../copy";
-import { featuredSystems } from "../content/systems";
+import { featuredSystems, systemHref, type SystemId } from "../content/systems";
 import HireActions from "./HireActions.astro";
 
 const { locale } = Astro.props as { locale: Locale };
 const t = copy[locale];
-const principles =
-  locale === "pt"
-    ? [
-        "Começo pelas regras de negócio e pelos contratos entre serviços para definir o fluxo de dados e o tratamento de falhas",
-        "Verifico cenários de falha, sincronização e recuperação com testes e experimentos locais",
-        "Documento decisões, limitações e comandos de execução para facilitar a revisão e a continuidade do projeto",
-      ]
-    : [
-        "I start with business rules and service contracts to define data flow and failure handling",
-        "I check failure, synchronization, and recovery scenarios through tests and local experiments",
-        "I document decisions, limitations, and run commands to make projects easier to review and continue",
-      ];
+const notes: Record<SystemId, Record<Locale, string>> = {
+  mercadoone: {
+    pt: "O caixa grava a venda no SQLite e a API confirma ou registra o conflito.",
+    en: "The POS stores the sale in SQLite, and the API confirms it or records a conflict.",
+  },
+  observa: {
+    pt: "Serviços em Python e Node.js trocam eventos Kafka, e o Grafana junta trace, métrica e log.",
+    en: "Python and Node.js services exchange Kafka events, and Grafana joins the trace, metric, and log.",
+  },
+  pipeline: {
+    pt: "O pedido entra por FastAPI e segue no RabbitMQ, com estorno quando o estoque falta.",
+    en: "The order enters through FastAPI and continues on RabbitMQ, with a refund when stock is missing.",
+  },
+  shortener: {
+    pt: "Go responde o redirect com Redis na frente e grava o clique num stream, fora da resposta.",
+    en: "Go answers the redirect from Redis and records the click on a stream, outside the response.",
+  },
+  promptvault: { pt: "", en: "" },
+};
 ---
 
 <main id="content" class="shell page">
-  <p class="section-label">{owner.lab}</p>
   <h1>{t.profileTitle}</h1>
-  <p class="role">{t.role} · {t.place} · {t.stack}</p>
-  <p class="lead-display editorial">{t.profileBlurb}</p>
+  <p class="role">{t.role} · {t.place}</p>
+  <p class="lead-display editorial">{t.profileLead}</p>
   <div class="prose">
-    <h2>{locale === "pt" ? "Como trabalho" : "How I work"}</h2>
+    <h2>{t.profileHowTitle}</h2>
     <ul>
-      {principles.map((p) => <li>{p}</li>)}
+      {t.profileHow.map((item) => <li>{item}</li>)}
     </ul>
-    <h2>{locale === "pt" ? "Sistemas em evidência" : "Systems on exhibit"}</h2>
+    <h2>{t.systems}</h2>
     <ul>
       {
-        featuredSystems.map((s) => (
+        featuredSystems.map((system) => (
           <li>
-            {s.titles[locale]} — {s.leads[locale]}
+            <a href={systemHref(system, locale)}>{system.titles[locale]}</a>
+            {" — "}
+            {notes[system.id][locale]}
           </li>
         ))
       }
     </ul>
-    <h2>{locale === "pt" ? "Competências no contexto" : "Skills in context"}</h2>
-    <p>
-      {
-        locale === "pt"
-          ? "Java com Spring Boot para APIs e regras de negócio; TypeScript com Angular e NestJS para interfaces web e serviços; Python para serviços e testes de contrato; PostgreSQL para persistência; Kafka para eventos; OpenTelemetry para rastrear a jornada. Docker e Kubernetes local tornam os experimentos reproduzíveis"
-          : "Java with Spring Boot for APIs and business rules; TypeScript with Angular and NestJS for web interfaces and services; Python for services and contract tests; PostgreSQL for persistence; Kafka for events; OpenTelemetry to trace the journey. Docker and local Kubernetes make the experiments reproducible"
-      }
-    </p>
+    <h2>{t.profileSkillsTitle}</h2>
+    <p>{t.profileSkills}</p>
   </div>
   <HireActions locale={locale} />
 </main>

@@ -27,6 +27,17 @@ export const copy = {
     profileBlurb:
       "Trabalho com APIs, regras de negócio e dados. Nos projetos abaixo, mostro o código, as decisões e o que ainda falta resolver.",
     profileCta: "Perfil completo",
+    profileLead:
+      "Desenho a API, a regra de negócio e o caminho do dado quando a rede falha, falta estoque ou o clique não pode esperar o banco. Nesta página, o código, a decisão e o que ainda falta ficam juntos.",
+    profileHowTitle: "Como trabalho",
+    profileHow: [
+      "Começo pelo caso que o sistema precisa aguentar: uma venda sem API, um pedido pago sem estoque, um redirect que não espera o analytics.",
+      "O contrato vem antes da ferramenta: status, identificador e o que permanece local até o servidor aceitar.",
+      "O limite fica ao lado do resultado. Medição de laboratório permanece medição de laboratório.",
+    ],
+    profileSkillsTitle: "No código",
+    profileSkills:
+      "No Mercado One, a API é Java com Spring Boot, o administrativo é Angular e o caixa é JavaFX, com PostgreSQL no servidor e SQLite no PDV. Observa e o pipeline de pedidos usam Python e Node.js em serviços ligados por eventos: o primeiro em Kafka e Kubernetes local, o segundo em RabbitMQ. O encurtador coloca Go no redirect, Redis no cache e PostgreSQL como fonte da verdade. Docker sobe esses ambientes.",
     scroll: "Rolar",
     systems: "Projetos",
     featured: "Em destaque",
@@ -137,6 +148,17 @@ export const copy = {
     profileBlurb:
       "I work on APIs, business rules, and data. The projects below show the code, the decisions, and the work still left to do.",
     profileCta: "Full profile",
+    profileLead:
+      "I design the API, the business rule, and the path data takes when the network fails, stock is missing, or a click cannot wait for the database. On this page, the code, the decision, and the work still open sit together.",
+    profileHowTitle: "How I work",
+    profileHow: [
+      "I start from the case the system has to survive: a sale with no API, a paid order with no stock, a redirect that does not wait for analytics.",
+      "The contract comes before the tool: status, identifier, and what stays local until the server accepts it.",
+      "The limit sits next to the result. A lab measurement stays a lab measurement.",
+    ],
+    profileSkillsTitle: "In the code",
+    profileSkills:
+      "In Mercado One, the API is Java with Spring Boot, the admin is Angular, and the POS is JavaFX, with PostgreSQL on the server and SQLite on the POS. Observa and the order pipeline use Python and Node.js in event-driven services: the first on Kafka and local Kubernetes, the second on RabbitMQ. The shortener puts Go on the redirect, Redis on the cache, and PostgreSQL as the source of truth. Docker starts these environments.",
     scroll: "Scroll",
     systems: "Projects",
     featured: "Featured",
